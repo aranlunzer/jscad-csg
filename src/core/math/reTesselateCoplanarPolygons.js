@@ -302,7 +302,7 @@ const reTesselateCoplanarPolygons = function (sourcepolygons, destpolygons) {
               let vertices3d = []
               points2d.map(function (point2d) {
                 let point3d = orthobasis.to3D(point2d)
-                let vertex3d = new Vertex(point3d)
+                let vertex3d = new Vertex(point3d, plane.normal.clone())
                 vertices3d.push(vertex3d)
               })
               let polygon = new Polygon(vertices3d, shared, plane)

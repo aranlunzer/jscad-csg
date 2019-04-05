@@ -68,7 +68,9 @@ function splitPolygonByPlane (plane, polygon) {
           let point = vertex.pos
           let nextpoint = vertices[nextvertexindex].pos
           let intersectionpoint = plane.splitLineBetweenPoints(point, nextpoint)
-          let intersectionvertex = new Vertex(intersectionpoint)
+          let ratio = intersectionpoint.minus(point).length()/nextpoint.minus(point).length()
+          let normal = vertex.normal.lerp(vertices[nextvertexindex].normal, ratio)
+          let intersectionvertex = new Vertex(intersectionpoint, normal)
           if (isback) {
             backvertices.push(vertex)
             backvertices.push(intersectionvertex)

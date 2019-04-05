@@ -256,12 +256,9 @@ Polygon.createFromPoints = function (points, shared, plane) {
   // FIXME : this circular dependency does not work !
   // const {fromPoints} = require('./polygon3Factories')
   // return fromPoints(points, shared, plane)
-  let vertices = []
-  points.map(function (p) {
-    let vec = new Vector3D(p)
-    let vertex = new Vertex(vec)
-    vertices.push(vertex)
-  })
+  let vectors = points.map(function(p) { return new Vector3D(p) })
+  let normal = Polygon.normalFromVector3Ds(vectors[0], vectors[1], vectors[2])
+  let vertices = vectors.map(function (v) { return new Vertex(v, normal.clone()) })
   let polygon
   if (arguments.length < 3) {
     polygon = new Polygon(vertices, shared)
@@ -288,6 +285,10 @@ Polygon.verticesConvex = function (vertices, planenormal) {
   return true
 }
 
+Polygon.normalFromVector3Ds = function (a, b, c) {
+  return b.minus(a).cross(c.minus(a)).unit()
+}
+
 // calculate whether three points form a convex corner
 //  prevpoint, point, nextpoint: the 3 coordinates (Vector3D instances)
 //  normal: the normal vector of the plane
@@ -302,6 +303,7 @@ Polygon.isStrictlyConvexPoint = function (prevpoint, point, nextpoint, normal) {
   let crossdotnormal = crossproduct.dot(normal)
   return (crossdotnormal >= EPS)
 }
+
 
 /** Class Polygon.Shared
  * Holds the shared properties for each polygon (Currently only color).

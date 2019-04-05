@@ -371,7 +371,7 @@ function polyhedron (params) {
 
     let v = []
     for (let j = ref[i].length - 1; j >= 0; j--) { // --- we reverse order for examples of OpenSCAD work
-      v.push(new Vertex3(new Vector3(pp[j][0], pp[j][1], pp[j][2])))
+      v.push(new Vertex3(new Vector3(pp[j][0], pp[j][1], pp[j][2]))) // @@ael
     }
     let s = Polygon3.defaultShared
     if (colors && colors[i]) {

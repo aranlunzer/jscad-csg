@@ -21,7 +21,7 @@ FuzzyCSGFactory.prototype = {
   },
 
   getVertex: function (sourcevertex) {
-    let elements = [sourcevertex.pos._x, sourcevertex.pos._y, sourcevertex.pos._z]
+    let elements = [sourcevertex.pos._x, sourcevertex.pos._y, sourcevertex.pos._z, sourcevertex.normal._x, sourcevertex.normal._y, sourcevertex.normal._z]
     let result = this.vertexfactory.lookupOrCreate(elements, function (els) {
       return sourcevertex
     })

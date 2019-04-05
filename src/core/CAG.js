@@ -249,11 +249,11 @@ CAG.prototype = {
     bounds[0] = bounds[0].minus(new Vector2D(1, 1))
     bounds[1] = bounds[1].plus(new Vector2D(1, 1))
     let csgshell = this._toCSGWall(-1, 1)
-    let csgplane = fromPolygons([new Polygon([
-      new Vertex3D(new Vector3D(bounds[0].x, bounds[0].y, 0)),
-      new Vertex3D(new Vector3D(bounds[1].x, bounds[0].y, 0)),
-      new Vertex3D(new Vector3D(bounds[1].x, bounds[1].y, 0)),
-      new Vertex3D(new Vector3D(bounds[0].x, bounds[1].y, 0))
+    let csgplane = fromPolygons([Polygon.createFromPoints([
+      [bounds[0].x, bounds[0].y, 0],
+      [bounds[1].x, bounds[0].y, 0],
+      [bounds[1].x, bounds[1].y, 0],
+      [bounds[0].x, bounds[1].y, 0]
     ])])
     if (flipped) {
       csgplane = csgplane.invert()
@@ -306,10 +306,10 @@ CAG.prototype = {
 
     let polygons = []
     vps1.forEach(function (vp1, i) {
-      polygons.push(new Polygon([
-        new Vertex3D(vps2[i][1]), new Vertex3D(vps2[i][0]), new Vertex3D(vp1[0])]))
-      polygons.push(new Polygon([
-        new Vertex3D(vps2[i][1]), new Vertex3D(vp1[0]), new Vertex3D(vp1[1])]))
+      polygons.push(Polygon.createFromPoints([
+        vps2[i][1], vps2[i][0], vp1[0] ]))
+      polygons.push(Polygon.createFromPoints([
+        vps2[i][1], vp1[0], vp1[1] ]))
     })
     return polygons
   },

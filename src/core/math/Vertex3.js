@@ -8,21 +8,23 @@ const {getTag} = require('../constants')
 // `flipped()`, and `interpolate()` methods that behave analogous to the ones
 // FIXME: And a lot MORE (see plane.fromVector3Ds for ex) ! This is fragile code
 // defined by `Vertex`.
-const Vertex = function (pos) {
+const Vertex = function (pos, normal) { if (!normal) debugger;
   this.pos = pos
+  this.normal = normal
 }
 
 // create from an untyped object with identical property names:
 Vertex.fromObject = function (obj) {
   var pos = new Vector3D(obj.pos)
-  return new Vertex(pos)
+  var normal = new Vector3D(obj.normal)
+  return new Vertex(pos, normal)
 }
 
 Vertex.prototype = {
     // Return a vertex with all orientation-specific data (e.g. vertex normal) flipped. Called when the
     // orientation of a polygon is flipped.
   flipped: function () {
-    return this
+    return new Vertex(this.pos.clone(), this.normal.negated())
   },
 
   getTag: function () {
@@ -38,18 +40,18 @@ Vertex.prototype = {
     // interpolating all properties using a parameter of `t`. Subclasses should
     // override this to interpolate additional properties.
   interpolate: function (other, t) {
-    var newpos = this.pos.lerp(other.pos, t)
-    return new Vertex(newpos)
+    return new Vertex(
+      this.pos.lerp(other.pos, t),
+      this.normal.lerp(other.normal, t)
+    );
   },
 
     // Affine transformation of vertex. Returns a new Vertex
   transform: function (matrix4x4) {
     var newpos = this.pos.multiply4x4(matrix4x4)
     var nMat = matrix4x4.inverseTranspose().reducedTo3x3()
-    var newvert = new Vertex(newpos)
-    newvert.normal = this.normal.multiply4x4(nMat).unit()
-    if (Math.random()<0.01) console.log(this.normal, newvert.normal)
-    return newvert
+    var newnorm = this.normal.multiply4x4(nMat).unit()
+    return new Vertex(newpos, newnorm)
   },
 
   toString: function () {

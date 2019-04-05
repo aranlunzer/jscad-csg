@@ -1,4 +1,5 @@
 const Vector2D = require('./Vector2')
+const Vector3D = require('./Vector3')
 const Vertex = require('./Vertex2')
 const Vertex3 = require('./Vertex3')
 const Polygon = require('./Polygon3')
@@ -56,13 +57,15 @@ Side.prototype = {
 
   toPolygon3D: function (z0, z1) {
     // console.log(this.vertex0.pos)
-    const vertices = [
-      new Vertex3(this.vertex0.pos.toVector3D(z0)),
-      new Vertex3(this.vertex1.pos.toVector3D(z0)),
-      new Vertex3(this.vertex1.pos.toVector3D(z1)),
-      new Vertex3(this.vertex0.pos.toVector3D(z1))
-    ]
-    return new Polygon(vertices)
+    const vp0 = this.vertex0.pos
+    const vp1 = this.vertex1.pos
+    const poly = Polygon.createFromPoints([
+      [vp0.x, vp0.y, z0],
+      [vp1.x, vp1.y, z0],
+      [vp1.x, vp1.y, z1],
+      [vp0.x, vp0.y, z1]
+      ])
+    return poly
   },
 
   transform: function (matrix4x4) {
