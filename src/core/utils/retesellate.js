@@ -31,14 +31,14 @@ const reTesselate = function (csg) {
       if (sourcepolygons.length < 2) {
         destpolygons = destpolygons.concat(sourcepolygons)
       } else {
-        let retesselayedpolygons = []
-        reTesselateCoplanarPolygons(sourcepolygons, retesselayedpolygons)
-        destpolygons = destpolygons.concat(retesselayedpolygons)
+        let retesselatedpolygons = []
+        reTesselateCoplanarPolygons(sourcepolygons, retesselatedpolygons)
+        destpolygons = destpolygons.concat(retesselatedpolygons)
       }
     }
     let result = fromPolygons(destpolygons)
     result.isRetesselated = true
-    // result = result.canonicalized();
+    result = result.canonicalized();
     result.properties = csg.properties // keep original properties
     return result
   }

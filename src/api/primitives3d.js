@@ -208,6 +208,7 @@ const cylinder = function (options) {
 
   let slices = parseOptionAsInt(options, 'resolution', defaultResolution2D) // FIXME is this 3D?
   let ray = e.minus(s)
+  let axisLength = ray.length()
   let axisZ = ray.unit() //, isY = (Math.abs(axisZ.y) > 0.5);
   let axisX = axisZ.randomNonParallelVector().unit()
 
@@ -215,15 +216,18 @@ const cylinder = function (options) {
   let axisY = axisX.cross(axisZ).unit()
   let start = new Vertex3(s, axisZ.negated())
   let end = new Vertex3(e, axisZ.clone())
+  let coneTiltVector = axisZ.times((rStart-rEnd)/axisLength)
+
   let polygons = []
 
   function point (stack, slice, radius, normalBlend) {
-    let angle = slice * Math.PI * alpha / 180 // ael - times alpha??
+    let angle = slice * Math.PI * alpha / 180
     let out = axisX.times(Math.cos(angle)).plus(axisY.times(Math.sin(angle)))
     let pos = s.plus(ray.times(stack)).plus(out.times(radius))
-    let normal = out.times(1 - Math.abs(normalBlend)).plus(axisZ.times(normalBlend))
+    let normal = normalBlend ? axisZ.times(normalBlend) : out.plus(coneTiltVector).unit()
     return new Vertex3(pos, normal)
   }
+
   if (alpha > 0) {
     for (let i = 0; i < slices; i++) {
       let t0 = i / slices
@@ -493,7 +497,7 @@ const roundedCube = function (options) {
   res = res.translate([-innerradius.x + center.x, -innerradius.y + center.y, -innerradius.z + center.z])
   res = res.reTesselated()
   res.properties.roundedCube = new Properties()
-  res.properties.roundedCube.center = new Vertex3(center)
+  res.properties.roundedCube.center = new Vector3(center) // ael - used to be a Vertex, but not clear it needs to be
   res.properties.roundedCube.facecenters = [
     new Connector(new Vector3([cuberadius.x, 0, 0]).plus(center), [1, 0, 0], [0, 0, 1]),
     new Connector(new Vector3([-cuberadius.x, 0, 0]).plus(center), [-1, 0, 0], [0, 0, 1]),

@@ -41,6 +41,12 @@ function insertSorted (array, element, comparefunc) {
 // points (CSG.Vector2D).
 // Interpolation is robust even if the points have the same y coordinate
 const interpolateBetween2DPointsForY = function (point1, point2, y) {
+  let t = lerpBetween2DPointsForY(point1, point2, y)
+  let result = point1.x + t * (point2.x - point1.x)
+  return result
+}
+
+const lerpBetween2DPointsForY = function (point1, point2, y) {
   let f1 = y - point1.y
   let f2 = point2.y - point1.y
   if (f2 < 0) {
@@ -57,8 +63,7 @@ const interpolateBetween2DPointsForY = function (point1, point2, y) {
   } else {
     t = f1 / f2
   }
-  let result = point1.x + t * (point2.x - point1.x)
-  return result
+  return t
 }
 
 function isCAG (object) {
@@ -96,6 +101,7 @@ module.exports = {
   IsFloat,
   solve2Linear,
   insertSorted,
+  lerpBetween2DPointsForY,
   interpolateBetween2DPointsForY,
   isCAG,
   isCSG

@@ -369,15 +369,15 @@ function polyhedron (params) {
       pp[j] = params.points[ref[i][j]]
     }
 
-    let v = []
+    let vectors = []
     for (let j = ref[i].length - 1; j >= 0; j--) { // --- we reverse order for examples of OpenSCAD work
-      v.push(new Vertex3(new Vector3(pp[j][0], pp[j][1], pp[j][2]))) // @@ael
+      vectors.push([pp[j][0], pp[j][1], pp[j][2]])
     }
     let s = Polygon3.defaultShared
     if (colors && colors[i]) {
       s = Polygon3.Shared.fromColor(colors[i])
     }
-    pgs.push(new Polygon3(v, s))
+    pgs.push(Polygon3.createFromPoints(vectors, s))
   }
 
   // forced to import here, otherwise out of order imports mess things up

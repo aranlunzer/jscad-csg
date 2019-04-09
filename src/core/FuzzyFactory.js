@@ -1,3 +1,4 @@
+/* eslint-disable object-shorthand,semi,no-else-return */
 // //////////////////////////////
 // ## class fuzzyFactory
 // This class acts as a factory for objects. We can search for an object with approximately
@@ -28,6 +29,7 @@ FuzzyFactory.prototype = {
       let valueQuantized = Math.round(el * multiplier)
       hash += valueQuantized + '/'
     })
+
     if (hash in this.lookuptable) {
       return this.lookuptable[hash]
     } else {
