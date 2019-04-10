@@ -11,9 +11,19 @@
 //   numdimensions: the number of parameters for each object
 //     for example for a 2D rectangle this would be 2
 //   tolerance: The maximum difference for each parameter allowed to be considered a match
-const FuzzyFactory = function (numdimensions, tolerance) {
+//
+// ael adaptation: the original code stored an object using a set of hashes made with
+// [floor, ceil] choices for each element.  for example, a point near 2, 1 might be
+// stored under the four hashes "2000/999", "2000/1000", "2001/999", "2001/1000".  this
+// makes the hashing more forgiving, but at potentially huge cost - for example, when
+// dealing with the six property values of a vertex with position and normal.  the new
+// property "multipleHash", set false by default, controls this behaviour.
+const FuzzyFactory = function (numdimensions, tolerance, multipleHash) {
   this.lookuptable = {}
-  this.multiplier = 1.0 / tolerance
+  this.multiplier = Math.round(1.0 / tolerance)  // ael - might as well use an integer
+  this.multipleHash = !!multipleHash
+
+  this.lookups = this.hits = 0 // diagnostic info, if wanted.  for example, in canonicalizeCSG you could put console.log((factory.vertexfactory.hits/factory.vertexfactory.lookups).toFixed(2))
 }
 
 FuzzyFactory.prototype = {
@@ -23,6 +33,8 @@ FuzzyFactory.prototype = {
     // If not found, calls the supplied callback function which should create a new object with
     // the specified properties. This object is inserted in the lookup database.
   lookupOrCreate: function (els, creatorCallback) {
+    this.lookups++
+
     let hash = ''
     let multiplier = this.multiplier
     els.forEach(function (el) {
@@ -31,25 +43,29 @@ FuzzyFactory.prototype = {
     })
 
     if (hash in this.lookuptable) {
+      this.hits++;
       return this.lookuptable[hash]
     } else {
       let object = creatorCallback(els)
-      let hashparts = els.map(function (el) {
-        let q0 = Math.floor(el * multiplier)
-        let q1 = q0 + 1
-        return ['' + q0 + '/', '' + q1 + '/']
-      })
-      let numelements = els.length
-      let numhashes = 1 << numelements
-      for (let hashmask = 0; hashmask < numhashes; ++hashmask) {
-        let hashmaskShifted = hashmask
-        hash = ''
-        hashparts.forEach(function (hashpart) {
-          hash += hashpart[hashmaskShifted & 1]
-          hashmaskShifted >>= 1
+      if (this.multipleHash) {
+        let hashparts = els.map(function (el) {
+          let q0 = Math.floor(el * multiplier)
+          let q1 = q0 + 1
+          return ['' + q0 + '/', '' + q1 + '/']
         })
-        this.lookuptable[hash] = object
-      }
+        let numelements = els.length
+        let numhashes = 1 << numelements
+        for (let hashmask = 0; hashmask < numhashes; ++hashmask) {
+          let hashmaskShifted = hashmask
+          hash = ''
+          hashparts.forEach(function (hashpart) {
+            hash += hashpart[hashmaskShifted & 1]
+            hashmaskShifted >>= 1
+          })
+          this.lookuptable[hash] = object
+        }
+      } else this.lookuptable[hash] = object
+
       return object
     }
   }

@@ -1,3 +1,4 @@
+/* eslint-disable semi */
 const {parseOption, parseOptionAs3DVector, parseOptionAs2DVector, parseOptionAs3DVectorList, parseOptionAsFloat, parseOptionAsInt} = require('./optionParsers')
 const {defaultResolution3D, defaultResolution2D, EPS} = require('../core/constants')
 const Vector3 = require('../core/math/Vector3')
@@ -247,12 +248,23 @@ const cylinder = function (options) {
         }
       }
     }
-    // @@ael
+    // add the side planes for a reduced segment
     if (alpha < 360) {
+    /*
       polygons.push(new Polygon3([start, end, point(0, 0, rStart)]))
       polygons.push(new Polygon3([point(0, 0, rStart), end, point(1, 0, rEnd)]))
       polygons.push(new Polygon3([start, point(0, 1, rStart), end]))
       polygons.push(new Polygon3([point(0, 1, rStart), point(1, 1, rEnd), end]))
+    */
+      function polyFromVectors(...vectors) {
+        let normal = Polygon3.normalFromVector3Ds(...vectors)
+        let vertices = vectors.map(v => new Vertex3(v, normal.clone()))
+        return new Polygon3(vertices)
+      }
+      polygons.push(polyFromVectors(s, e, point(0, 0, rStart, 0).pos))
+      polygons.push(polyFromVectors(point(0, 0, rStart, 0).pos, e, point(1, 0, rEnd, 0).pos))
+      polygons.push(polyFromVectors(s, point(0, 1, rStart, 0).pos, e))
+      polygons.push(polyFromVectors(point(0, 1, rStart, 0).pos, point(1, 1, rEnd, 0).pos, e))
     }
   }
   let result = fromPolygons(polygons)
