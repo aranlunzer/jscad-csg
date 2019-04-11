@@ -1,3 +1,4 @@
+/* eslint-disable semi */
 const Vector3D = require('./Vector3')
 const Vertex = require('./Vertex3')
 const Matrix4x4 = require('./Matrix4')
@@ -35,7 +36,8 @@ let Polygon = function (vertices, shared, plane) {
   this.shared = shared
     // let numvertices = vertices.length;
 
-  if (arguments.length >= 3) {
+  //if (arguments.length >= 3) { // ael - this was irritating.  let callers pass undefined.
+  if (plane) {
     this.plane = plane
   } else {
     const Plane = require('./Plane') // FIXME: circular dependencies
@@ -256,16 +258,14 @@ Polygon.createFromPoints = function (points, shared, plane) {
   // FIXME : this circular dependency does not work !
   // const {fromPoints} = require('./polygon3Factories')
   // return fromPoints(points, shared, plane)
-  let vectors = points.map(function(p) { return new Vector3D(p) })
+  let vectors = points.map(function (p) { return new Vector3D(p) })
+  return Polygon.createFromVectors(vectors, shared, plane)
+}
+
+Polygon.createFromVectors = function (vectors, shared, plane) {
   let normal = Polygon.normalFromVector3Ds(vectors[0], vectors[1], vectors[2])
-  let vertices = vectors.map(function (v) { return new Vertex(v, normal.clone()) })
-  let polygon
-  if (arguments.length < 3) {
-    polygon = new Polygon(vertices, shared)
-  } else {
-    polygon = new Polygon(vertices, shared, plane)
-  }
-  return polygon
+  let vertices = vectors.map(v => new Vertex(v, normal.clone()))
+  return new Polygon(vertices, shared, plane)
 }
 
 Polygon.verticesConvex = function (vertices, planenormal) {

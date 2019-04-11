@@ -137,27 +137,19 @@ const sphere = function (options) {
         let sinpitch = Math.sin(pitch)
         if (slice2 > 0) {
           vertices = []
-//          vertices.push(new Vertex3(center.plus(prevcylinderpoint.times(prevcospitch).minus(zvector.times(prevsinpitch)))))
           addVertex(vertices, center, prevcylinderpoint.times(prevcospitch).minus(zvector.times(prevsinpitch)))
-//          vertices.push(new Vertex3(center.plus(cylinderpoint.times(prevcospitch).minus(zvector.times(prevsinpitch)))))
           addVertex(vertices, center, cylinderpoint.times(prevcospitch).minus(zvector.times(prevsinpitch)))
           if (slice2 < qresolution) {
-//            vertices.push(new Vertex3(center.plus(cylinderpoint.times(cospitch).minus(zvector.times(sinpitch)))))
             addVertex(vertices, center, cylinderpoint.times(cospitch).minus(zvector.times(sinpitch)))
           }
-//          vertices.push(new Vertex3(center.plus(prevcylinderpoint.times(cospitch).minus(zvector.times(sinpitch)))))
           addVertex(vertices, center, prevcylinderpoint.times(cospitch).minus(zvector.times(sinpitch)))
           polygons.push(new Polygon3(vertices))
           vertices = []
-//          vertices.push(new Vertex3(center.plus(prevcylinderpoint.times(prevcospitch).plus(zvector.times(prevsinpitch)))))
           addVertex(vertices, center, prevcylinderpoint.times(prevcospitch).plus(zvector.times(prevsinpitch)))
-//          vertices.push(new Vertex3(center.plus(cylinderpoint.times(prevcospitch).plus(zvector.times(prevsinpitch)))))
           addVertex(vertices, center, cylinderpoint.times(prevcospitch).plus(zvector.times(prevsinpitch)))
           if (slice2 < qresolution) {
-//            vertices.push(new Vertex3(center.plus(cylinderpoint.times(cospitch).plus(zvector.times(sinpitch)))))
             addVertex(vertices, center, cylinderpoint.times(cospitch).plus(zvector.times(sinpitch)))
           }
-//          vertices.push(new Vertex3(center.plus(prevcylinderpoint.times(cospitch).plus(zvector.times(sinpitch)))))
           addVertex(vertices, center, prevcylinderpoint.times(cospitch).plus(zvector.times(sinpitch)))
           vertices.reverse()
           polygons.push(new Polygon3(vertices))
@@ -250,21 +242,10 @@ const cylinder = function (options) {
     }
     // add the side planes for a reduced segment
     if (alpha < 360) {
-    /*
-      polygons.push(new Polygon3([start, end, point(0, 0, rStart)]))
-      polygons.push(new Polygon3([point(0, 0, rStart), end, point(1, 0, rEnd)]))
-      polygons.push(new Polygon3([start, point(0, 1, rStart), end]))
-      polygons.push(new Polygon3([point(0, 1, rStart), point(1, 1, rEnd), end]))
-    */
-      function polyFromVectors(...vectors) {
-        let normal = Polygon3.normalFromVector3Ds(...vectors)
-        let vertices = vectors.map(v => new Vertex3(v, normal.clone()))
-        return new Polygon3(vertices)
-      }
-      polygons.push(polyFromVectors(s, e, point(0, 0, rStart, 0).pos))
-      polygons.push(polyFromVectors(point(0, 0, rStart, 0).pos, e, point(1, 0, rEnd, 0).pos))
-      polygons.push(polyFromVectors(s, point(0, 1, rStart, 0).pos, e))
-      polygons.push(polyFromVectors(point(0, 1, rStart, 0).pos, point(1, 1, rEnd, 0).pos, e))
+      polygons.push(Polygon3.createFromVectors(s, e, point(0, 0, rStart, 0).pos))
+      polygons.push(Polygon3.createFromVectors(point(0, 0, rStart, 0).pos, e, point(1, 0, rEnd, 0).pos))
+      polygons.push(Polygon3.createFromVectors(s, point(0, 1, rStart, 0).pos, e))
+      polygons.push(Polygon3.createFromVectors(point(0, 1, rStart, 0).pos, point(1, 1, rEnd, 0).pos, e))
     }
   }
   let result = fromPolygons(polygons)
