@@ -305,6 +305,10 @@ const roundedCylinder = function (options) {
   let zvector = direction.unit().times(radius)
   let xvector = zvector.cross(normal).unit().times(radius)
   let yvector = xvector.cross(zvector).unit().times(radius)
+  function addVertex(vertices, center, radial) {
+    vertices.push(new Vertex3(center.plus(radial), radial.unit()))
+  }
+
   let prevcylinderpoint
   for (let slice1 = 0; slice1 <= resolution; slice1++) {
     let angle = Math.PI * 2.0 * slice1 / resolution
@@ -312,10 +316,10 @@ const roundedCylinder = function (options) {
     if (slice1 > 0) {
             // cylinder vertices:
       let vertices = []
-      vertices.push(new Vertex3(p1.plus(cylinderpoint))) // @@ael
-      vertices.push(new Vertex3(p1.plus(prevcylinderpoint)))
-      vertices.push(new Vertex3(p2.plus(prevcylinderpoint)))
-      vertices.push(new Vertex3(p2.plus(cylinderpoint)))
+      addVertex(vertices, p1, cylinderpoint)
+      addVertex(vertices, p1, prevcylinderpoint)
+      addVertex(vertices, p2, prevcylinderpoint)
+      addVertex(vertices, p2, cylinderpoint)
       polygons.push(new Polygon3(vertices))
       let prevcospitch, prevsinpitch
       for (let slice2 = 0; slice2 <= qresolution; slice2++) {
@@ -325,20 +329,20 @@ const roundedCylinder = function (options) {
         let sinpitch = Math.sin(pitch)
         if (slice2 > 0) {
           vertices = []
-          vertices.push(new Vertex3(p1.plus(prevcylinderpoint.times(prevcospitch).minus(zvector.times(prevsinpitch)))))
-          vertices.push(new Vertex3(p1.plus(cylinderpoint.times(prevcospitch).minus(zvector.times(prevsinpitch)))))
+          addVertex(vertices, p1, prevcylinderpoint.times(prevcospitch).minus(zvector.times(prevsinpitch)))
+          addVertex(vertices, p1, cylinderpoint.times(prevcospitch).minus(zvector.times(prevsinpitch)))
           if (slice2 < qresolution) {
-            vertices.push(new Vertex3(p1.plus(cylinderpoint.times(cospitch).minus(zvector.times(sinpitch)))))
+            addVertex(vertices, p1, cylinderpoint.times(cospitch).minus(zvector.times(sinpitch)))
           }
-          vertices.push(new Vertex3(p1.plus(prevcylinderpoint.times(cospitch).minus(zvector.times(sinpitch)))))
+          addVertex(vertices, p1, prevcylinderpoint.times(cospitch).minus(zvector.times(sinpitch)))
           polygons.push(new Polygon3(vertices))
           vertices = []
-          vertices.push(new Vertex3(p2.plus(prevcylinderpoint.times(prevcospitch).plus(zvector.times(prevsinpitch)))))
-          vertices.push(new Vertex3(p2.plus(cylinderpoint.times(prevcospitch).plus(zvector.times(prevsinpitch)))))
+          addVertex(vertices, p2, prevcylinderpoint.times(prevcospitch).plus(zvector.times(prevsinpitch)))
+          addVertex(vertices, p2, cylinderpoint.times(prevcospitch).plus(zvector.times(prevsinpitch)))
           if (slice2 < qresolution) {
-            vertices.push(new Vertex3(p2.plus(cylinderpoint.times(cospitch).plus(zvector.times(sinpitch)))))
+            addVertex(vertices, p2, cylinderpoint.times(cospitch).plus(zvector.times(sinpitch)))
           }
-          vertices.push(new Vertex3(p2.plus(prevcylinderpoint.times(cospitch).plus(zvector.times(sinpitch)))))
+          addVertex(vertices, p2, prevcylinderpoint.times(cospitch).plus(zvector.times(sinpitch)))
           vertices.reverse()
           polygons.push(new Polygon3(vertices))
         }
@@ -394,37 +398,47 @@ const cylinderElliptic = function (options) {
 
   let slices = parseOptionAsInt(options, 'resolution', defaultResolution2D) // FIXME is this correct?
   let ray = e.minus(s)
+  let axisLength = ray.length()
   let axisZ = ray.unit() //, isY = (Math.abs(axisZ.y) > 0.5);
   let axisX = axisZ.randomNonParallelVector().unit()
 
     //  let axisX = new Vector3(isY, !isY, 0).cross(axisZ).unit();
   let axisY = axisX.cross(axisZ).unit()
-  let start = new Vertex3(s)
-  let end = new Vertex3(e)
+  let start = new Vertex3(s, axisZ.negated())
+  let end = new Vertex3(e, axisZ.clone())
   let polygons = []
 
-  function point (stack, slice, radius) {
-    let angle = slice * Math.PI * 2
-    let out = axisX.times(radius._x * Math.cos(angle)).plus(axisY.times(radius._y * Math.sin(angle)))
+  function point (stack, slice, endNormal) {
+    let angle = slice * Math.PI * 2, cos = Math.cos(angle), sin = Math.sin(angle)
+    let radii = [{ x: rStart._x * cos, y: rStart._y * sin }, { x: rEnd._x * cos, y: rEnd._y * sin }]
+    let radiusHere = radii[stack]
+    let out = axisX.times(radiusHere.x).plus(axisY.times(radiusHere.y))
     let pos = s.plus(ray.times(stack)).plus(out)
-    return new Vertex3(pos)
+    let normal
+    if (endNormal) normal = axisZ.times(endNormal)
+    else {
+      let rMags = radii.map(xy => Math.sqrt(xy.x*xy.x + xy.y*xy.y))
+      let tiltVector = axisZ.times((rMags[0] - rMags[1])/axisLength)
+      normal = out.unit().plus(tiltVector).unit()
+    }
+    return new Vertex3(pos, normal)
   }
   for (let i = 0; i < slices; i++) {
     let t0 = i / slices
     let t1 = (i + 1) / slices
 
     if (rEnd._x === rStart._x && rEnd._y === rStart._y) {
-      polygons.push(new Polygon3([start, point(0, t0, rEnd), point(0, t1, rEnd)]))
-      polygons.push(new Polygon3([point(0, t1, rEnd), point(0, t0, rEnd), point(1, t0, rEnd), point(1, t1, rEnd)]))
-      polygons.push(new Polygon3([end, point(1, t1, rEnd), point(1, t0, rEnd)]))
+      polygons.push(new Polygon3([start, point(0, t0, -1), point(0, t1, -1)]))
+      polygons.push(new Polygon3([point(0, t1, 0), point(0, t0, 0), point(1, t0, 0), point(1, t1, 0)]))
+      polygons.push(new Polygon3([end, point(1, t1, 1), point(1, t0, 1)]))
     } else {
       if (rStart._x > 0) {
-        polygons.push(new Polygon3([start, point(0, t0, rStart), point(0, t1, rStart)]))
-        polygons.push(new Polygon3([point(0, t0, rStart), point(1, t0, rEnd), point(0, t1, rStart)]))
+        polygons.push(new Polygon3([start, point(0, t0, -1), point(0, t1, -1)]))
+        polygons.push(new Polygon3([point(0, t0, 0), point(1, t0, 0), point(0, t1, 0)]))
       }
       if (rEnd._x > 0) {
-        polygons.push(new Polygon3([end, point(1, t1, rEnd), point(1, t0, rEnd)]))
-        polygons.push(new Polygon3([point(1, t0, rEnd), point(1, t1, rEnd), point(0, t1, rStart)]))
+        polygons.push(new Polygon3([end, point(1, t1, 1), point(1, t0, 1)]))
+        polygons.push(new Polygon3([point(1, t0, 0), point(1, t1, 0), point(0, t1, 0)]))
       }
     }
   }
