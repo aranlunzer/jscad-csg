@@ -1,4 +1,4 @@
-
+/* eslint-disable semi */
 /// //////////FUNCTIONAL API
 const {CSG} = require('../../csg')
 const { circle } = require('./primitives2d-api')

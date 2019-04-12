@@ -79,7 +79,7 @@ The vertex normal has been removed since it complicates retesselation. It's not 
 for solid CAD anyway.
 
 */
-
+/* eslint-disable semi */
 const {addTransformationMethodsToPrototype, addCenteringToPrototype} = require('./src/core/mutators')
 let CSG = require('./src/core/CSG')
 let CAG = require('./src/core/CAG')
@@ -170,6 +170,51 @@ CAG.fromPointsNoCheck = CAGFactories.fromPointsNoCheck
 CAG.fromPath2 = CAGFactories.fromPath2
 CAG.fromFakeCSG = CAGFactories.fromFakeCSG
 CAG.fromCompactBinary = CAGFactories.fromCompactBinary
+
+//////////////////////////////////////////////////
+// ael added for w3
+const { union, difference, intersection } = require('./src/api/ops-booleans')
+CSG.union = union
+CSG.difference = difference
+CSG.intersection = intersection
+
+const { translate, center, scale, rotate, transform, mirror, expand, contract, minkowski, hull, chain_hull } = require('./src/api/ops-transformations')
+CSG.translate = translate
+CSG.center = center
+CSG.scale = scale
+CSG.rotate = rotate
+CSG.transform = transform
+CSG.mirror = mirror
+CSG.expand = expand
+CSG.contract = contract
+CSG.minkowski = minkowski
+CSG.hull = hull
+CSG.chain_hull = chain_hull
+
+const { css2rgb, color, rgb2hsl, hsl2rgb, rgb2hsv, hsv2rgb, html2rgb, rgb2html } = require('./src/api/color')
+CSG.css2rgb = css2rgb
+CSG.color = color
+CSG.rgb2hsl = rgb2hsl
+CSG.hsl2rgb = hsl2rgb
+CSG.rgb2hsv = rgb2hsv
+CSG.hsv2rgb = hsv2rgb
+CSG.html2rgb = html2rgb
+CSG.rgb2html = rgb2html
+
+const { vector_char, vector_text, vectorChar, vectorText } = require('./src/api/text')
+CSG.vector_char = vector_char
+CSG.vector_text = vector_text
+CSG.vectorChar = vectorChar
+CSG.vectorText = vectorText
+
+const { extrudeInOrthonormalBasis, extrudeInPlane, extrude, linear_extrude, rotate_extrude, rotateExtrude, rectangular_extrude } = require('./src/api/ops-extrusions')
+CSG.extrudeInOrthonormalBasis = extrudeInOrthonormalBasis
+CSG.extrudeInPlane = extrudeInPlane
+CSG.extrude = extrude
+CSG.linear_extrude = linear_extrude
+CSG.rotate_extrude = rotate_extrude
+CSG.rotateExtrude = rotateExtrude
+CSG.rectangular_extrude = rectangular_extrude
 
 /// ////////////////////////////////////
 // option parsers

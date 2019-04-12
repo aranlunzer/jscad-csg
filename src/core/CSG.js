@@ -1,5 +1,9 @@
+/* eslint-disable semi,object-shorthand */
+const {EPS} = require('./constants')
 const Tree = require('./trees')
 const Polygon = require('./math/Polygon3')
+const Vector3 = require('./math/Vector3')
+const Vertex3 = require('./math/Vertex3')
 const Plane = require('./math/Plane')
 const OrthoNormalBasis = require('./math/OrthoNormalBasis')
 
@@ -295,6 +299,53 @@ CSG.prototype = {
     let onb = new OrthoNormalBasis(plane)
     let crosssect = this.sectionCut(onb)
     let midpiece = crosssect.extrudeInOrthonormalBasis(onb, length)
+    let piece1 = this.cutByPlane(plane)
+    let piece2 = this.cutByPlane(plane.flipped())
+    let result = piece1.union([midpiece, piece2.translate(plane.normal.times(length))])
+    return result
+  },
+
+  // ael - method for stretching an object that is known to have a complete cross-
+  // section of polygon edges at the supplied plane
+  simplifiedStretchAtPlane: function (normal, point, length) {
+    let plane = Plane.fromNormalAndPoint(normal, point)
+    let onb = new OrthoNormalBasis(plane)
+    let centerInPlane = onb.to2D(new Vector3(point))
+    let verticesInPlane = [] // $$
+    this.polygons.forEach(poly => {
+      poly.vertices.forEach(vert => {
+        if (Math.abs(plane.signedDistanceToPoint(vert.pos)) < EPS && !verticesInPlane.some(vip => vip.pos.distanceTo(vert.pos) < EPS)) {
+          let vertCopy = new Vertex3(vert.pos.clone(), vert.normal.clone())
+          vertCopy._coord2d = onb.to2D(vertCopy.pos).minus(centerInPlane)
+          verticesInPlane.push(vertCopy)
+        }
+        })
+      })
+
+    // point sorter, adapted from https://stackoverflow.com/questions/6989100/sort-points-in-clockwise-order
+    function sorter(pa, pb) { // -ve if a before b; +ve if b before a; 0 if no need to change
+      let a = pa._coord2d, b = pb._coord2d;
+      if (a.x >= -EPS && b.x < -EPS) return -1; // a is in right half, b in left
+      if (a.x < -EPS && b.x >= -EPS) return 1; // a is in left half, b in right
+      if (Math.abs(a.x) < EPS && Math.abs(b.x) < EPS) return b.y - a.y // both on the left-right divide; top (if any) comes before
+
+      // compute the cross product of vectors (center -> a) x (center -> b)
+      return a.x * b.y - b.x * a.y;
+    }
+    verticesInPlane.sort(sorter);
+
+    function newVertex(original, offset) {
+      return new Vertex3(original.pos.plus(plane.normal.times(offset)), original.normal.clone())
+    }
+    let walls = [];
+    walls.push(Polygon.createFromVectors(verticesInPlane.map(vert => vert.pos)));
+    walls.push(Polygon.createFromVectors(verticesInPlane.slice().reverse().map(vert => vert.pos.plus(plane.normal.times(length)))));
+    verticesInPlane.push(verticesInPlane[0]); // so the walls will close
+    for (let i = 1; i < verticesInPlane.length; i++) {
+      let thisVert = verticesInPlane[i], prevVert = verticesInPlane[i - 1];
+      walls.push(new Polygon([newVertex(prevVert, 0), newVertex(prevVert, length), newVertex(thisVert, length), newVertex(thisVert, 0)]));
+    }
+    let midpiece = CSG.fromPolygons(walls);
     let piece1 = this.cutByPlane(plane)
     let piece2 = this.cutByPlane(plane.flipped())
     let result = piece1.union([midpiece, piece2.translate(plane.normal.times(length))])

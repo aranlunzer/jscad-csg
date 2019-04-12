@@ -1,3 +1,4 @@
+/* eslint-disable semi */
 const {EPS} = require('../core/constants')
 const Plane = require('../core/math/Plane')
 const Vector2 = require('../core/math/Vector2')
@@ -45,13 +46,13 @@ const cutByPlane = function (csg, plane) {
   maxdistance = Math.sqrt(maxdistance)
   maxdistance *= 1.01 // make sure it's really larger
   // Now build a polygon on the plane, at any point farther than maxdistance from the plane center:
-  let vertices = []
   let orthobasis = new OrthoNormalBasis(plane)
-  vertices.push(new Vertex3(orthobasis.to3D(new Vector2(maxdistance, -maxdistance)), new Vector3(plane.normal)))
-  vertices.push(new Vertex3(orthobasis.to3D(new Vector2(-maxdistance, -maxdistance)), new Vector3(plane.normal)))
-  vertices.push(new Vertex3(orthobasis.to3D(new Vector2(-maxdistance, maxdistance)), new Vector3(plane.normal)))
-  vertices.push(new Vertex3(orthobasis.to3D(new Vector2(maxdistance, maxdistance)), new Vector3(plane.normal)))
-  const polygon = new Polygon3(vertices, null, plane.flipped())
+  let vectors = []
+  vectors.push(orthobasis.to3D(new Vector2(maxdistance, -maxdistance)))
+  vectors.push(orthobasis.to3D(new Vector2(-maxdistance, -maxdistance)))
+  vectors.push(orthobasis.to3D(new Vector2(-maxdistance, maxdistance)))
+  vectors.push(orthobasis.to3D(new Vector2(maxdistance, maxdistance)))
+  const polygon = Polygon3.createFromVectors(vectors, null, plane.flipped())
 
   // and extrude the polygon into a cube, backwards of the plane:
   const cube = polygon.extrude(plane.normal.times(-maxdistance))

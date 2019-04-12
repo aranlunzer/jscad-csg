@@ -242,10 +242,10 @@ const cylinder = function (options) {
     }
     // add the side planes for a reduced segment
     if (alpha < 360) {
-      polygons.push(Polygon3.createFromVectors(s, e, point(0, 0, rStart, 0).pos))
-      polygons.push(Polygon3.createFromVectors(point(0, 0, rStart, 0).pos, e, point(1, 0, rEnd, 0).pos))
-      polygons.push(Polygon3.createFromVectors(s, point(0, 1, rStart, 0).pos, e))
-      polygons.push(Polygon3.createFromVectors(point(0, 1, rStart, 0).pos, point(1, 1, rEnd, 0).pos, e))
+      polygons.push(Polygon3.createFromVectors([s, e, point(0, 0, rStart, 0).pos]))
+      polygons.push(Polygon3.createFromVectors([point(0, 0, rStart, 0).pos, e, point(1, 0, rEnd, 0).pos]))
+      polygons.push(Polygon3.createFromVectors([s, point(0, 1, rStart, 0).pos, e]))
+      polygons.push(Polygon3.createFromVectors([point(0, 1, rStart, 0).pos, point(1, 1, rEnd, 0).pos, e]))
     }
   }
   let result = fromPolygons(polygons)
@@ -496,11 +496,11 @@ const roundedCube = function (options) {
   if (innerradius.x < 0 || innerradius.y < 0 || innerradius.z < 0) {
     throw new Error('roundradius <= radius!')
   }
-  let res = sphere({radius: 1, resolution: resolution})
+  let res = sphere({ radius: 1, resolution })
   res = res.scale(roundradius)
-  innerradius.x > EPS && (res = res.stretchAtPlane([1, 0, 0], [0, 0, 0], 2 * innerradius.x))
-  innerradius.y > EPS && (res = res.stretchAtPlane([0, 1, 0], [0, 0, 0], 2 * innerradius.y))
-  innerradius.z > EPS && (res = res.stretchAtPlane([0, 0, 1], [0, 0, 0], 2 * innerradius.z))
+  if (innerradius.x > EPS) res = res.simplifiedStretchAtPlane([1, 0, 0], [0, 0, 0], 2 * innerradius.x)
+  if (innerradius.y > EPS) res = res.simplifiedStretchAtPlane([0, 1, 0], [0, 0, 0], 2 * innerradius.y)
+  if (innerradius.z > EPS) res = res.simplifiedStretchAtPlane([0, 0, 1], [0, 0, 0], 2 * innerradius.z)
   res = res.translate([-innerradius.x + center.x, -innerradius.y + center.y, -innerradius.z + center.z])
   res = res.reTesselated()
   res.properties.roundedCube = new Properties()
