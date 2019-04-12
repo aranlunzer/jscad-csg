@@ -1,3 +1,5 @@
+<i>April 2019: updated by ael to suit needs of w3</i>
+
 ## Classes
 
 <dl>
@@ -20,7 +22,7 @@
 <dd><p>Epsilon used during determination of near zero distances.</p>
 </dd>
 <dt><a href="#angleEPS">angleEPS</a></dt>
-<dd><p>Epsilon used during determination of near zero areas.</p>
+<dd><p>Epsilon used during determination of near zero angles.</p>
 </dd>
 <dt><a href="#areaEPS">areaEPS</a></dt>
 <dd><p>Epsilon used during determination of near zero areas.
@@ -30,6 +32,8 @@
 
 ## Functions
 
+<i>all now accessible as </i><code>CSG.\<functionName\>()</code>
+
 <dl>
 <dt><a href="#center">center([options], objects)</a> ⇒ <code>Object</code> | <code>Array</code></dt>
 <dd><p>Centers the given object(s) using the given options (if any)</p>
@@ -38,7 +42,7 @@
 <dd><p>clone the given object</p>
 </dd>
 <dt><a href="#css2rgb">css2rgb(String)</a> ⇒</dt>
-<dd><p>Converts an CSS color name to RGB color.</p>
+<dd><p>Converts a CSS color name to RGB color.</p>
 </dd>
 <dt><a href="#color">color(color, objects)</a> ⇒ <code><a href="#CSG">CSG</a></code></dt>
 <dd><p>apply the given color to the input object(s)</p>
@@ -68,7 +72,7 @@ Assumes h, s, and v are contained in the set [0, 1] and
 returns r, g, and b in the set [0, 1].</p>
 </dd>
 <dt><a href="#html2rgb">html2rgb()</a></dt>
-<dd><p>Converts a HTML5 color value (string) to RGB values
+<dd><p>Converts an HTML5 color value (string) to RGB values
 See the color input type of HTML5 forms
 Conversion formula:</p>
 <ul>
@@ -85,36 +89,34 @@ Conversion forumla:</p>
 </ul>
 </dd>
 <dt><a href="#union">union(objects)</a> ⇒ <code><a href="#CSG">CSG</a></code></dt>
-<dd><p>union/ combine the given shapes</p>
+<dd><p>union/combine the given shapes</p>
 </dd>
 <dt><a href="#difference">difference(objects)</a> ⇒ <code><a href="#CSG">CSG</a></code></dt>
-<dd><p>difference/ subtraction of the given shapes ie:
-cut out C From B From A ie : a - b - c etc</p>
+<dd><p>difference/subtraction of the given shapes - e.g., <code>difference(A, B, C)</code> will cut out C From B From A</p>
 </dd>
 <dt><a href="#intersection">intersection(objects)</a> ⇒ <code><a href="#CSG">CSG</a></code></dt>
-<dd><p>intersection of the given shapes: ie keep only the common parts between the given shapes</p>
+<dd><p>intersection of the given shapes - i.e., keep only the common parts between the given shapes</p>
 </dd>
 <dt><a href="#overCutInsideCorners">overCutInsideCorners(_cag, cutterradius)</a> ⇒ <code><a href="#CAG">CAG</a></code></dt>
-<dd><p>cag = cag.overCutInsideCorners(cutterradius);
-Using a CNC router it&#39;s impossible to cut out a true sharp inside corner. The inside corner
+<dd><p>Using a CNC router it&#39;s impossible to cut out a true sharp inside corner. The inside corner
 will be rounded due to the radius of the cutter. This function compensates for this by creating
 an extra cutout at each inner corner so that the actual cut out shape will be at least as large
 as needed.</p>
 </dd>
 <dt><a href="#sectionCut">sectionCut(csg, orthobasis)</a></dt>
-<dd><p>cuts a csg along a orthobasis</p>
+<dd><p>cuts a csg along an orthobasis</p>
 </dd>
 <dt><a href="#cutByPlane">cutByPlane(plane)</a> ⇒ <code><a href="#CSG">CSG</a></code></dt>
-<dd><p>Cut the solid by a plane. Returns the solid on the back side of the plane</p>
+<dd><p>Cut the solid by a plane. Returns the solid on the back side of the plane.</p>
 </dd>
 <dt><a href="#expandedShellOfCCSG">expandedShellOfCCSG(radius, resolution, unionWithThis)</a></dt>
 <dd><p>Create the expanded shell of the solid:
-All faces are extruded to get a thickness of 2*radius
-Cylinders are constructed around every side
-Spheres are placed on every vertex
+All faces are extruded to get a thickness of 2*radius.
+Cylinders are constructed around every side.
+Spheres are placed on every vertex.
 unionWithThis: if true, the resulting solid will be united with &#39;this&#39; solid;
-the result is a true expansion of the solid
-If false, returns only the shell</p>
+the result is a true expansion of the solid;
+if false, returns only the shell.</p>
 </dd>
 <dt><a href="#extrudeInOrthonormalBasis">extrudeInOrthonormalBasis(cag, orthonormalbasis, depth, [options])</a></dt>
 <dd><p>extrude the CAG in a certain plane.
@@ -124,7 +126,7 @@ and this is exactly a OrthoNormalBasis.</p>
 </dd>
 <dt><a href="#extrudeInPlane">extrudeInPlane(cag, axis1, axis2, depth, [options])</a></dt>
 <dd><p>Extrude in a standard cartesian plane, specified by two axis identifiers. Each identifier can be
-one of [&quot;X&quot;,&quot;Y&quot;,&quot;Z&quot;,&quot;-X&quot;,&quot;-Y&quot;,&quot;-Z&quot;]
+one of [&quot;X&quot;, &quot;Y&quot;, &quot;Z&quot;, &quot;-X&quot;, &quot;-Y&quot;, &quot;-Z&quot;]
 The 2d x axis will map to the first given 3D axis, the 2d y axis will map to the second.
 See OrthoNormalBasis.GetCartesian for details.</p>
 </dd>
@@ -157,7 +159,7 @@ See OrthoNormalBasis.GetCartesian for details.</p>
 <dd><p>apply the given matrix transform to the given objects</p>
 </dd>
 <dt><a href="#center">center(axes, ...object)</a> ⇒ <code><a href="#CSG">CSG</a></code></dt>
-<dd><p>Center the given object(s) about the given axes</p>
+<dd><p>center the given object(s) about the given axes</p>
 </dd>
 <dt><a href="#mirror">mirror(vector, ...objects)</a> ⇒ <code><a href="#CSG">CSG</a></code></dt>
 <dd><p>mirror an object in 2D/3D space</p>
@@ -166,7 +168,7 @@ See OrthoNormalBasis.GetCartesian for details.</p>
 <dd><p>expand an object in 2D/3D space</p>
 </dd>
 <dt><a href="#contract">contract(radius, object)</a> ⇒ <code>CSG/CAG</code></dt>
-<dd><p>contract an object(s) in 2D/3D space</p>
+<dd><p>contract object(s) in 2D/3D space</p>
 </dd>
 <dt><a href="#minkowski">minkowski(objects)</a> ⇒ <code><a href="#CSG">CSG</a></code></dt>
 <dd><p>create a minkowski sum of the given shapes</p>
@@ -255,14 +257,6 @@ if the character is not supported it is replaced by a question mark.</p>
 <dd><p>Construct an array of character segments from a ascii string whose characters code is between 31 and 127,
 if one character is not supported it is replaced by a question mark.</p>
 </dd>
-<dt><del><a href="#vector_char">vector_char(x, y, char)</a> ⇒ <code><a href="#VectorCharObject">VectorCharObject</a></code></del></dt>
-<dd><p>Construct a <a href="#VectorCharObject">VectorCharObject</a> from a ascii character whose code is between 31 and 127,
-if the character is not supported it is replaced by a question mark.</p>
-</dd>
-<dt><del><a href="#vector_text">vector_text(x, y, text)</a> ⇒ <code>Array</code></del></dt>
-<dd><p>Construct an array of character segments from a ascii string whose characters code is between 31 and 127,
-if one character is not supported it is replaced by a question mark.</p>
-</dd>
 <dt><a href="#fromSides">fromSides(sides)</a> ⇒ <code><a href="#CAG">CAG</a></code></dt>
 <dd><p>Construct a CAG from a list of <code>Side</code> instances.</p>
 </dd>
@@ -317,7 +311,7 @@ See Polygon.prototype.solidFromSlices() for details.</p>
 <a name="CAG"></a>
 
 ## CAG
-**Kind**: global class  
+**Kind**: global class
 
 * [CAG](#CAG)
     * [new CAG()](#new_CAG_new)
@@ -337,19 +331,19 @@ Each side is a line between 2 points.
 ### caG.toPoints() ⇒ <code>Array.&lt;points&gt;</code>
 Convert to a list of points.
 
-**Kind**: instance method of [<code>CAG</code>](#CAG)  
-**Returns**: <code>Array.&lt;points&gt;</code> - list of points in 2D space  
+**Kind**: instance method of [<code>CAG</code>](#CAG)
+**Returns**: <code>Array.&lt;points&gt;</code> - list of points in 2D space
 <a name="CAG+toCompactBinary"></a>
 
 ### caG.toCompactBinary() ⇒ <code>CompactBinary</code>
 Convert to compact binary form.
 See fromCompactBinary.
 
-**Kind**: instance method of [<code>CAG</code>](#CAG)  
+**Kind**: instance method of [<code>CAG</code>](#CAG)
 <a name="CSG"></a>
 
 ## CSG
-**Kind**: global class  
+**Kind**: global class
 
 * [CSG](#CSG)
     * [new CSG()](#new_CSG_new)
@@ -380,18 +374,18 @@ be combined using the `union()`, `subtract()`, and `intersect()` methods.
 Return a new CSG solid representing the space in either this solid or
 in the given solids. Neither this solid nor the given solids are modified.
 
-**Kind**: instance method of [<code>CSG</code>](#CSG)  
-**Returns**: [<code>CSG</code>](#CSG) - new CSG object  
+**Kind**: instance method of [<code>CSG</code>](#CSG)
+**Returns**: [<code>CSG</code>](#CSG) - new CSG object
 
 | Param | Type | Description |
 | --- | --- | --- |
 | csg | [<code>Array.&lt;CSG&gt;</code>](#CSG) | list of CSG objects |
 
-**Example**  
+**Example**
 ```js
 let C = A.union(B)
 ```
-**Example**  
+**Example**
 ```js
 +-------+            +-------+
 |       |            |       |
@@ -408,18 +402,18 @@ let C = A.union(B)
 Return a new CSG solid representing space in this solid but
 not in the given solids. Neither this solid nor the given solids are modified.
 
-**Kind**: instance method of [<code>CSG</code>](#CSG)  
-**Returns**: [<code>CSG</code>](#CSG) - new CSG object  
+**Kind**: instance method of [<code>CSG</code>](#CSG)
+**Returns**: [<code>CSG</code>](#CSG) - new CSG object
 
 | Param | Type | Description |
 | --- | --- | --- |
 | csg | [<code>Array.&lt;CSG&gt;</code>](#CSG) | list of CSG objects |
 
-**Example**  
+**Example**
 ```js
 let C = A.subtract(B)
 ```
-**Example**  
+**Example**
 ```js
 +-------+            +-------+
 |       |            |       |
@@ -436,18 +430,18 @@ let C = A.subtract(B)
 Return a new CSG solid representing space in both this solid and
 in the given solids. Neither this solid nor the given solids are modified.
 
-**Kind**: instance method of [<code>CSG</code>](#CSG)  
-**Returns**: [<code>CSG</code>](#CSG) - new CSG object  
+**Kind**: instance method of [<code>CSG</code>](#CSG)
+**Returns**: [<code>CSG</code>](#CSG) - new CSG object
 
 | Param | Type | Description |
 | --- | --- | --- |
 | csg | [<code>Array.&lt;CSG&gt;</code>](#CSG) | list of CSG objects |
 
-**Example**  
+**Example**
 ```js
 let C = A.intersect(B)
 ```
-**Example**  
+**Example**
 ```js
 +-------+
 |       |
@@ -464,9 +458,9 @@ let C = A.intersect(B)
 Return a new CSG solid with solid and empty space switched.
 This solid is not modified.
 
-**Kind**: instance method of [<code>CSG</code>](#CSG)  
-**Returns**: [<code>CSG</code>](#CSG) - new CSG object  
-**Example**  
+**Kind**: instance method of [<code>CSG</code>](#CSG)
+**Returns**: [<code>CSG</code>](#CSG) - new CSG object
+**Example**
 ```js
 let B = A.invert()
 ```
@@ -476,14 +470,14 @@ let B = A.invert()
 Return a new CSG solid that is transformed using the given Matrix.
 Several matrix transformations can be combined before transforming this solid.
 
-**Kind**: instance method of [<code>CSG</code>](#CSG)  
-**Returns**: [<code>CSG</code>](#CSG) - new CSG object  
+**Kind**: instance method of [<code>CSG</code>](#CSG)
+**Returns**: [<code>CSG</code>](#CSG) - new CSG object
 
 | Param | Type | Description |
 | --- | --- | --- |
 | matrix4x4 | <code>CSG.Matrix4x4</code> | matrix to be applied |
 
-**Example**  
+**Example**
 ```js
 var m = new CSG.Matrix4x4()
 m = m.multiply(CSG.Matrix4x4.rotationX(40))
@@ -497,19 +491,19 @@ returns true if there is a possibility that the two solids overlap
 returns false if we can be sure that they do not overlap
 NOTE: this is critical as it is used in UNIONs
 
-**Kind**: instance method of [<code>CSG</code>](#CSG)  
+**Kind**: instance method of [<code>CSG</code>](#CSG)
 
 | Param | Type |
 | --- | --- |
-| csg | [<code>CSG</code>](#CSG) | 
+| csg | [<code>CSG</code>](#CSG) |
 
 <a name="CSG+connectTo"></a>
 
 ### csG.connectTo(myConnector, otherConnector, mirror, normalrotation) ⇒ [<code>CSG</code>](#CSG)
 Connect a solid to another solid, such that two Connectors become connected
 
-**Kind**: instance method of [<code>CSG</code>](#CSG)  
-**Returns**: [<code>CSG</code>](#CSG) - this csg, tranformed accordingly  
+**Kind**: instance method of [<code>CSG</code>](#CSG)
+**Returns**: [<code>CSG</code>](#CSG) - this csg, tranformed accordingly
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -523,24 +517,24 @@ Connect a solid to another solid, such that two Connectors become connected
 ### csG.setShared(shared) ⇒ [<code>CSG</code>](#CSG)
 set the .shared property of all polygons
 
-**Kind**: instance method of [<code>CSG</code>](#CSG)  
-**Returns**: [<code>CSG</code>](#CSG) - Returns a new CSG solid, the original is unmodified!  
+**Kind**: instance method of [<code>CSG</code>](#CSG)
+**Returns**: [<code>CSG</code>](#CSG) - Returns a new CSG solid, the original is unmodified!
 
 | Param | Type |
 | --- | --- |
-| shared | <code>Object</code> | 
+| shared | <code>Object</code> |
 
 <a name="CSG+setColor"></a>
 
 ### csG.setColor(args) ⇒ [<code>CSG</code>](#CSG)
 sets the color of this csg: non mutating, returns a new CSG
 
-**Kind**: instance method of [<code>CSG</code>](#CSG)  
-**Returns**: [<code>CSG</code>](#CSG) - a copy of this CSG, with the given color  
+**Kind**: instance method of [<code>CSG</code>](#CSG)
+**Returns**: [<code>CSG</code>](#CSG) - a copy of this CSG, with the given color
 
 | Param | Type |
 | --- | --- |
-| args | <code>Object</code> | 
+| args | <code>Object</code> |
 
 <a name="CSG+getFeatures"></a>
 
@@ -548,14 +542,14 @@ sets the color of this csg: non mutating, returns a new CSG
 Returns an array of values for the requested features of this solid.
 Supported Features: 'volume', 'area'
 
-**Kind**: instance method of [<code>CSG</code>](#CSG)  
-**Returns**: <code>Array.&lt;Float&gt;</code> - values  
+**Kind**: instance method of [<code>CSG</code>](#CSG)
+**Returns**: <code>Array.&lt;Float&gt;</code> - values
 
 | Param | Type | Description |
 | --- | --- | --- |
 | features | <code>Array.&lt;String&gt;</code> | list of features to calculate |
 
-**Example**  
+**Example**
 ```js
 let volume = A.getFeatures('volume')
 let values = A.getFeatures('area','volume')
@@ -563,8 +557,8 @@ let values = A.getFeatures('area','volume')
 <a name="CSG+toPolygons"></a>
 
 ### csG.toPolygons() ⇒ <code>Array.&lt;Polygon&gt;</code>
-**Kind**: instance method of [<code>CSG</code>](#CSG)  
-**Returns**: <code>Array.&lt;Polygon&gt;</code> - The list of polygons.  
+**Kind**: instance method of [<code>CSG</code>](#CSG)
+**Returns**: <code>Array.&lt;Polygon&gt;</code> - The list of polygons.
 <a name="CSG+toCompactBinary"></a>
 
 ### csG.toCompactBinary() ⇒ <code>Object</code>
@@ -572,57 +566,57 @@ returns a compact binary representation of this csg
 usually used to transfer CSG objects to/from webworkes
 NOTE: very interesting compact format, with a lot of reusable ideas
 
-**Kind**: instance method of [<code>CSG</code>](#CSG)  
-**Returns**: <code>Object</code> - compact binary representation of a CSG  
+**Kind**: instance method of [<code>CSG</code>](#CSG)
+**Returns**: <code>Object</code> - compact binary representation of a CSG
 <a name="CSG+toTriangles"></a>
 
 ### csG.toTriangles() ⇒ <code>Polygons</code>
 returns the triangles of this csg
 
-**Kind**: instance method of [<code>CSG</code>](#CSG)  
-**Returns**: <code>Polygons</code> - triangulated polygons  
+**Kind**: instance method of [<code>CSG</code>](#CSG)
+**Returns**: <code>Polygons</code> - triangulated polygons
 <a name="defaultResolution2D"></a>
 
 ## defaultResolution2D
 Number of polygons per 360 degree revolution for 2D objects.
 
-**Kind**: global constant  
-**Default**: <code>32</code>  
+**Kind**: global constant
+**Default**: <code>32</code>
 <a name="defaultResolution3D"></a>
 
 ## defaultResolution3D
 Number of polygons per 360 degree revolution for 3D objects.
 
-**Kind**: global constant  
-**Default**: <code>12</code>  
+**Kind**: global constant
+**Default**: <code>12</code>
 <a name="EPS"></a>
 
 ## EPS
 Epsilon used during determination of near zero distances.
 
-**Kind**: global constant  
-**Default**: <code>0.00001</code>  
+**Kind**: global constant
+**Default**: <code>0.00001</code>
 <a name="angleEPS"></a>
 
 ## angleEPS
 Epsilon used during determination of near zero areas.
 
-**Kind**: global constant  
-**Default**: <code>0.1</code>  
+**Kind**: global constant
+**Default**: <code>0.1</code>
 <a name="areaEPS"></a>
 
 ## areaEPS
 Epsilon used during determination of near zero areas.
  This is the minimal area of a minimal polygon.
 
-**Kind**: global constant  
+**Kind**: global constant
 <a name="center"></a>
 
 ## center([options], objects) ⇒ <code>Object</code> \| <code>Array</code>
 Centers the given object(s) using the given options (if any)
 
-**Kind**: global function  
-**Returns**: <code>Object</code> \| <code>Array</code> - objects  
+**Kind**: global function
+**Returns**: <code>Object</code> \| <code>Array</code> - objects
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -631,7 +625,7 @@ Centers the given object(s) using the given options (if any)
 | [options.center] | <code>Array</code> | <code>[0,0,0]</code> | point of which to center the object upon |
 | objects | <code>Object</code> \| <code>Array</code> |  | the shape(s) to center |
 
-**Example**  
+**Example**
 ```js
 let csg = center({axes: [true,false,false]}, sphere()) // center about the X axis
 ```
@@ -640,14 +634,14 @@ let csg = center({axes: [true,false,false]}, sphere()) // center about the X axi
 ## clone(obj) ⇒ [<code>CSG</code>](#CSG)
 clone the given object
 
-**Kind**: global function  
-**Returns**: [<code>CSG</code>](#CSG) - new CSG object , a copy of the input  
+**Kind**: global function
+**Returns**: [<code>CSG</code>](#CSG) - new CSG object , a copy of the input
 
 | Param | Type | Description |
 | --- | --- | --- |
 | obj | <code>Object</code> | the object to clone by |
 
-**Example**  
+**Example**
 ```js
 let copy = clone(sphere())
 ```
@@ -656,8 +650,8 @@ let copy = clone(sphere())
 ## css2rgb(String) ⇒
 Converts an CSS color name to RGB color.
 
-**Kind**: global function  
-**Returns**: Array           The RGB representation, or [0,0,0] default  
+**Kind**: global function
+**Returns**: Array           The RGB representation, or [0,0,0] default
 
 | Param | Description |
 | --- | --- |
@@ -668,15 +662,15 @@ Converts an CSS color name to RGB color.
 ## color(color, objects) ⇒ [<code>CSG</code>](#CSG)
 apply the given color to the input object(s)
 
-**Kind**: global function  
-**Returns**: [<code>CSG</code>](#CSG) - new CSG object , with the given color  
+**Kind**: global function
+**Returns**: [<code>CSG</code>](#CSG) - new CSG object , with the given color
 
 | Param | Type | Description |
 | --- | --- | --- |
 | color | <code>Object</code> | either an array or a hex string of color values |
 | objects | <code>Object</code> \| <code>Array</code> | either a single or multiple CSG/CAG objects to color |
 
-**Example**  
+**Example**
 ```js
 let redSphere = color([1,0,0,1], sphere())
 ```
@@ -688,8 +682,8 @@ adapted from http://en.wikipedia.org/wiki/HSL_color_space.
 Assumes r, g, and b are contained in the set [0, 1] and
 returns h, s, and l in the set [0, 1].
 
-**Kind**: global function  
-**Returns**: Array           The HSL representation  
+**Kind**: global function
+**Returns**: Array           The HSL representation
 
 | Param | Description |
 | --- | --- |
@@ -705,8 +699,8 @@ adapted from http://en.wikipedia.org/wiki/HSL_color_space.
 Assumes h, s, and l are contained in the set [0, 1] and
 returns r, g, and b in the set [0, 1].
 
-**Kind**: global function  
-**Returns**: Array           The RGB representation  
+**Kind**: global function
+**Returns**: Array           The RGB representation
 
 | Param | Description |
 | --- | --- |
@@ -722,8 +716,8 @@ adapted from http://en.wikipedia.org/wiki/HSV_color_space.
 Assumes r, g, and b are contained in the set [0, 1] and
 returns h, s, and v in the set [0, 1].
 
-**Kind**: global function  
-**Returns**: Array           The HSV representation  
+**Kind**: global function
+**Returns**: Array           The HSV representation
 
 | Param | Description |
 | --- | --- |
@@ -739,8 +733,8 @@ adapted from http://en.wikipedia.org/wiki/HSV_color_space.
 Assumes h, s, and v are contained in the set [0, 1] and
 returns r, g, and b in the set [0, 1].
 
-**Kind**: global function  
-**Returns**: Array           The RGB representation  
+**Kind**: global function
+**Returns**: Array           The RGB representation
 
 | Param | Description |
 | --- | --- |
@@ -757,7 +751,7 @@ Conversion formula:
 - split the string; "#RRGGBB" into RGB components
 - convert the HEX value into RGB values
 
-**Kind**: global function  
+**Kind**: global function
 <a name="rgb2html"></a>
 
 ## rgb2html()
@@ -766,20 +760,20 @@ Conversion forumla:
 - convert R, G, B into HEX strings
 - return HTML formatted string "#RRGGBB"
 
-**Kind**: global function  
+**Kind**: global function
 <a name="union"></a>
 
 ## union(objects) ⇒ [<code>CSG</code>](#CSG)
 union/ combine the given shapes
 
-**Kind**: global function  
-**Returns**: [<code>CSG</code>](#CSG) - new CSG object, the union of all input shapes  
+**Kind**: global function
+**Returns**: [<code>CSG</code>](#CSG) - new CSG object, the union of all input shapes
 
 | Param | Type | Description |
 | --- | --- | --- |
 | objects | <code>Object(s)</code> \| <code>Array</code> | objects to combine : can be given - one by one: union(a,b,c) or - as an array: union([a,b,c]) |
 
-**Example**  
+**Example**
 ```js
 let unionOfSpherAndCube = union(sphere(), cube())
 ```
@@ -789,14 +783,14 @@ let unionOfSpherAndCube = union(sphere(), cube())
 difference/ subtraction of the given shapes ie:
 cut out C From B From A ie : a - b - c etc
 
-**Kind**: global function  
-**Returns**: [<code>CSG</code>](#CSG) - new CSG object, the difference of all input shapes  
+**Kind**: global function
+**Returns**: [<code>CSG</code>](#CSG) - new CSG object, the difference of all input shapes
 
 | Param | Type | Description |
 | --- | --- | --- |
 | objects | <code>Object(s)</code> \| <code>Array</code> | objects to subtract can be given - one by one: difference(a,b,c) or - as an array: difference([a,b,c]) |
 
-**Example**  
+**Example**
 ```js
 let differenceOfSpherAndCube = difference(sphere(), cube())
 ```
@@ -805,14 +799,14 @@ let differenceOfSpherAndCube = difference(sphere(), cube())
 ## intersection(objects) ⇒ [<code>CSG</code>](#CSG)
 intersection of the given shapes: ie keep only the common parts between the given shapes
 
-**Kind**: global function  
-**Returns**: [<code>CSG</code>](#CSG) - new CSG object, the intersection of all input shapes  
+**Kind**: global function
+**Returns**: [<code>CSG</code>](#CSG) - new CSG object, the intersection of all input shapes
 
 | Param | Type | Description |
 | --- | --- | --- |
 | objects | <code>Object(s)</code> \| <code>Array</code> | objects to intersect can be given - one by one: intersection(a,b,c) or - as an array: intersection([a,b,c]) |
 
-**Example**  
+**Example**
 ```js
 let intersectionOfSpherAndCube = intersection(sphere(), cube())
 ```
@@ -825,8 +819,8 @@ will be rounded due to the radius of the cutter. This function compensates for t
 an extra cutout at each inner corner so that the actual cut out shape will be at least as large
 as needed.
 
-**Kind**: global function  
-**Returns**: [<code>CAG</code>](#CAG) - cag with overcutInsideCorners  
+**Kind**: global function
+**Returns**: [<code>CAG</code>](#CAG) - cag with overcutInsideCorners
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -838,7 +832,7 @@ as needed.
 ## sectionCut(csg, orthobasis)
 cuts a csg along a orthobasis
 
-**Kind**: global function  
+**Kind**: global function
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -850,12 +844,12 @@ cuts a csg along a orthobasis
 ## cutByPlane(plane) ⇒ [<code>CSG</code>](#CSG)
 Cut the solid by a plane. Returns the solid on the back side of the plane
 
-**Kind**: global function  
-**Returns**: [<code>CSG</code>](#CSG) - the solid on the back side of the plane  
+**Kind**: global function
+**Returns**: [<code>CSG</code>](#CSG) - the solid on the back side of the plane
 
 | Param | Type |
 | --- | --- |
-| plane | <code>Plane</code> | 
+| plane | <code>Plane</code> |
 
 <a name="expandedShellOfCCSG"></a>
 
@@ -868,13 +862,13 @@ unionWithThis: if true, the resulting solid will be united with 'this' solid;
 the result is a true expansion of the solid
 If false, returns only the shell
 
-**Kind**: global function  
+**Kind**: global function
 
 | Param | Type |
 | --- | --- |
-| radius | <code>Float</code> | 
-| resolution | <code>Integer</code> | 
-| unionWithThis | <code>Boolean</code> | 
+| radius | <code>Float</code> |
+| resolution | <code>Integer</code> |
+| unionWithThis | <code>Boolean</code> |
 
 <a name="extrudeInOrthonormalBasis"></a>
 
@@ -884,7 +878,7 @@ Giving just a plane is not enough, multiple different extrusions in the same pla
 by rotating around the plane's origin. An additional right-hand vector should be specified as well,
 and this is exactly a OrthoNormalBasis.
 
-**Kind**: global function  
+**Kind**: global function
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -902,7 +896,7 @@ one of ["X","Y","Z","-X","-Y","-Z"]
 The 2d x axis will map to the first given 3D axis, the 2d y axis will map to the second.
 See OrthoNormalBasis.GetCartesian for details.
 
-**Kind**: global function  
+**Kind**: global function
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -918,8 +912,8 @@ See OrthoNormalBasis.GetCartesian for details.
 ## extrude(cag, [options]) ⇒ [<code>CSG</code>](#CSG)
 linear extrusion of 2D shape, with optional twist
 
-**Kind**: global function  
-**Returns**: [<code>CSG</code>](#CSG) - the extrude shape, as a CSG object  
+**Kind**: global function
+**Returns**: [<code>CSG</code>](#CSG) - the extrude shape, as a CSG object
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -929,7 +923,7 @@ linear extrusion of 2D shape, with optional twist
 | [options.twiststeps] | <code>Boolean</code> | <code>defaultResolution3D</code> | twiststeps determines the resolution of the twist (should be >= 1) |
 | [options.twistangle] | <code>Boolean</code> | <code>0</code> | twistangle The final face is rotated <twistangle> degrees. Rotation is done around the origin of the 2d shape (i.e. x=0, y=0) |
 
-**Example**  
+**Example**
 ```js
 extruded=cag.extrude({offset: [0,0,10], twistangle: 360, twiststeps: 100});
 ```
@@ -939,8 +933,8 @@ extruded=cag.extrude({offset: [0,0,10], twistangle: 360, twiststeps: 100});
 Extrude to into a 3D solid by rotating the origin around the Y axis.
 (and turning everything into XY plane)
 
-**Kind**: global function  
-**Returns**: [<code>CSG</code>](#CSG) - new 3D solid  
+**Kind**: global function
+**Returns**: [<code>CSG</code>](#CSG) - new 3D solid
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -953,8 +947,8 @@ Extrude to into a 3D solid by rotating the origin around the Y axis.
 ## linear_extrude([options], baseShape) ⇒ [<code>CSG</code>](#CSG)
 linear extrusion of the input 2d shape
 
-**Kind**: global function  
-**Returns**: [<code>CSG</code>](#CSG) - new extruded shape  
+**Kind**: global function
+**Returns**: [<code>CSG</code>](#CSG) - new extruded shape
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -965,7 +959,7 @@ linear extrusion of the input 2d shape
 | [options.center] | <code>Boolean</code> | <code>false</code> | whether to center extrusion or not |
 | baseShape | [<code>CAG</code>](#CAG) |  | input 2d shape |
 
-**Example**  
+**Example**
 ```js
 let revolved = linear_extrude({height: 10}, square())
 ```
@@ -974,8 +968,8 @@ let revolved = linear_extrude({height: 10}, square())
 ## rotate_extrude([options], baseShape) ⇒ [<code>CSG</code>](#CSG)
 rotate extrusion / revolve of the given 2d shape
 
-**Kind**: global function  
-**Returns**: [<code>CSG</code>](#CSG) - new extruded shape  
+**Kind**: global function
+**Returns**: [<code>CSG</code>](#CSG) - new extruded shape
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -986,7 +980,7 @@ rotate extrusion / revolve of the given 2d shape
 | [options.overflow] | <code>Float</code> | <code>&#x27;cap&#x27;</code> | what to do with points outside of bounds (+ / - x) : defaults to capping those points to 0 (only supported behaviour for now) |
 | baseShape | [<code>CAG</code>](#CAG) |  | input 2d shape |
 
-**Example**  
+**Example**
 ```js
 let revolved = rotate_extrude({fn: 10}, square())
 ```
@@ -995,8 +989,8 @@ let revolved = rotate_extrude({fn: 10}, square())
 ## rectangular_extrude(basePoints, [options]) ⇒ [<code>CSG</code>](#CSG)
 rectangular extrusion of the given array of points
 
-**Kind**: global function  
-**Returns**: [<code>CSG</code>](#CSG) - new extruded shape  
+**Kind**: global function
+**Returns**: [<code>CSG</code>](#CSG) - new extruded shape
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -1008,7 +1002,7 @@ rectangular extrusion of the given array of points
 | [options.closed] | <code>Boolean</code> | <code>false</code> | whether to close the input path for the extrusion or not |
 | [options.round] | <code>Boolean</code> | <code>true</code> | whether to round the extrusion or not |
 
-**Example**  
+**Example**
 ```js
 let revolved = rectangular_extrude({height: 10}, square())
 ```
@@ -1017,15 +1011,15 @@ let revolved = rectangular_extrude({height: 10}, square())
 ## translate(vector, ...objects) ⇒ [<code>CSG</code>](#CSG)
 translate an object in 2D/3D space
 
-**Kind**: global function  
-**Returns**: [<code>CSG</code>](#CSG) - new CSG object , translated by the given amount  
+**Kind**: global function
+**Returns**: [<code>CSG</code>](#CSG) - new CSG object , translated by the given amount
 
 | Param | Type | Description |
 | --- | --- | --- |
 | vector | <code>Object</code> | 3D vector to translate the given object(s) by |
 | ...objects | <code>Object(s)</code> \| <code>Array</code> | either a single or multiple CSG/CAG objects to translate |
 
-**Example**  
+**Example**
 ```js
 let movedSphere = translate([10,2,0], sphere())
 ```
@@ -1034,15 +1028,15 @@ let movedSphere = translate([10,2,0], sphere())
 ## scale(scale, ...objects) ⇒ [<code>CSG</code>](#CSG)
 scale an object in 2D/3D space
 
-**Kind**: global function  
-**Returns**: [<code>CSG</code>](#CSG) - new CSG object , scaled by the given amount  
+**Kind**: global function
+**Returns**: [<code>CSG</code>](#CSG) - new CSG object , scaled by the given amount
 
 | Param | Type | Description |
 | --- | --- | --- |
 | scale | <code>Float</code> \| <code>Array</code> | either an array or simple number to scale object(s) by |
 | ...objects | <code>Object(s)</code> \| <code>Array</code> | either a single or multiple CSG/CAG objects to scale |
 
-**Example**  
+**Example**
 ```js
 let scaledSphere = scale([0.2,15,1], sphere())
 ```
@@ -1051,15 +1045,15 @@ let scaledSphere = scale([0.2,15,1], sphere())
 ## rotate(rotation, objects) ⇒ [<code>CSG</code>](#CSG)
 rotate an object in 2D/3D space
 
-**Kind**: global function  
-**Returns**: [<code>CSG</code>](#CSG) - new CSG object , rotated by the given amount  
+**Kind**: global function
+**Returns**: [<code>CSG</code>](#CSG) - new CSG object , rotated by the given amount
 
 | Param | Type | Description |
 | --- | --- | --- |
 | rotation | <code>Float</code> \| <code>Array</code> | either an array or simple number to rotate object(s) by |
 | objects | <code>Object(s)</code> \| <code>Array</code> | either a single or multiple CSG/CAG objects to rotate |
 
-**Example**  
+**Example**
 ```js
 let rotatedSphere = rotate([0.2,15,1], sphere())
 ```
@@ -1068,15 +1062,15 @@ let rotatedSphere = rotate([0.2,15,1], sphere())
 ## transform(matrix, ...objects) ⇒ [<code>CSG</code>](#CSG)
 apply the given matrix transform to the given objects
 
-**Kind**: global function  
-**Returns**: [<code>CSG</code>](#CSG) - new CSG object , transformed  
+**Kind**: global function
+**Returns**: [<code>CSG</code>](#CSG) - new CSG object , transformed
 
 | Param | Type | Description |
 | --- | --- | --- |
 | matrix | <code>Array</code> | the 4x4 matrix to apply, as a simple 1d array of 16 elements |
 | ...objects | <code>Object(s)</code> \| <code>Array</code> | either a single or multiple CSG/CAG objects to transform |
 
-**Example**  
+**Example**
 ```js
 const angle = 45
 let transformedShape = transform([
@@ -1091,15 +1085,15 @@ sin(angle),  cos(angle), 0, 20,
 ## center(axes, ...object) ⇒ [<code>CSG</code>](#CSG)
 Center the given object(s) about the given axes
 
-**Kind**: global function  
-**Returns**: [<code>CSG</code>](#CSG) - new CSG object , translated by the given amount  
+**Kind**: global function
+**Returns**: [<code>CSG</code>](#CSG) - new CSG object , translated by the given amount
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | axes | <code>Array</code> \| <code>Boolean</code> | <code>[true,true,true]|true</code> | an array of boolean values that indicate the axes (X,Y,Z) to center upon. A single boolean is also allowed. |
 | ...object | <code>Object</code> |  | one or more objects to center, i.e. objects are CSG or CAG |
 
-**Example**  
+**Example**
 ```js
 let csg = center([true,false,false], sphere()) // center about the X axis
 ```
@@ -1108,15 +1102,15 @@ let csg = center([true,false,false], sphere()) // center about the X axis
 ## mirror(vector, ...objects) ⇒ [<code>CSG</code>](#CSG)
 mirror an object in 2D/3D space
 
-**Kind**: global function  
-**Returns**: [<code>CSG</code>](#CSG) - new CSG object , mirrored  
+**Kind**: global function
+**Returns**: [<code>CSG</code>](#CSG) - new CSG object , mirrored
 
 | Param | Type | Description |
 | --- | --- | --- |
 | vector | <code>Array</code> | the axes to mirror the object(s) by |
 | ...objects | <code>Object(s)</code> \| <code>Array</code> | either a single or multiple CSG/CAG objects to mirror |
 
-**Example**  
+**Example**
 ```js
 let rotatedSphere = mirror([0.2,15,1], sphere())
 ```
@@ -1125,15 +1119,15 @@ let rotatedSphere = mirror([0.2,15,1], sphere())
 ## expand(radius, object) ⇒ <code>CSG/CAG</code>
 expand an object in 2D/3D space
 
-**Kind**: global function  
-**Returns**: <code>CSG/CAG</code> - new CSG/CAG object , expanded  
+**Kind**: global function
+**Returns**: <code>CSG/CAG</code> - new CSG/CAG object , expanded
 
 | Param | Type | Description |
 | --- | --- | --- |
 | radius | <code>float</code> | the radius to expand by |
 | object | <code>Object</code> | a CSG/CAG objects to expand |
 
-**Example**  
+**Example**
 ```js
 let expanededShape = expand([0.2,15,1], sphere())
 ```
@@ -1142,15 +1136,15 @@ let expanededShape = expand([0.2,15,1], sphere())
 ## contract(radius, object) ⇒ <code>CSG/CAG</code>
 contract an object(s) in 2D/3D space
 
-**Kind**: global function  
-**Returns**: <code>CSG/CAG</code> - new CSG/CAG object , contracted  
+**Kind**: global function
+**Returns**: <code>CSG/CAG</code> - new CSG/CAG object , contracted
 
 | Param | Type | Description |
 | --- | --- | --- |
 | radius | <code>float</code> | the radius to contract by |
 | object | <code>Object</code> | a CSG/CAG objects to contract |
 
-**Example**  
+**Example**
 ```js
 let contractedShape = contract([0.2,15,1], sphere())
 ```
@@ -1159,14 +1153,14 @@ let contractedShape = contract([0.2,15,1], sphere())
 ## minkowski(objects) ⇒ [<code>CSG</code>](#CSG)
 create a minkowski sum of the given shapes
 
-**Kind**: global function  
-**Returns**: [<code>CSG</code>](#CSG) - new CSG object , mirrored  
+**Kind**: global function
+**Returns**: [<code>CSG</code>](#CSG) - new CSG object , mirrored
 
 | Param | Type | Description |
 | --- | --- | --- |
 | objects | <code>Object(s)</code> \| <code>Array</code> | either a single or multiple CSG/CAG objects to create a hull around |
 
-**Example**  
+**Example**
 ```js
 let hulled = hull(rect(), circle())
 ```
@@ -1175,14 +1169,14 @@ let hulled = hull(rect(), circle())
 ## hull(objects) ⇒ [<code>CSG</code>](#CSG)
 create a convex hull of the given shapes
 
-**Kind**: global function  
-**Returns**: [<code>CSG</code>](#CSG) - new CSG object , a hull around the given shapes  
+**Kind**: global function
+**Returns**: [<code>CSG</code>](#CSG) - new CSG object , a hull around the given shapes
 
 | Param | Type | Description |
 | --- | --- | --- |
 | objects | <code>Object(s)</code> \| <code>Array</code> | either a single or multiple CSG/CAG objects to create a hull around |
 
-**Example**  
+**Example**
 ```js
 let hulled = hull(rect(), circle())
 ```
@@ -1194,14 +1188,14 @@ Originally "Whosa whatsis" suggested "Chain Hull" ,
 as described at https://plus.google.com/u/0/105535247347788377245/posts/aZGXKFX1ACN
 essentially hull A+B, B+C, C+D and then union those
 
-**Kind**: global function  
-**Returns**: [<code>CSG</code>](#CSG) - new CSG object ,which a chain hull of the inputs  
+**Kind**: global function
+**Returns**: [<code>CSG</code>](#CSG) - new CSG object ,which a chain hull of the inputs
 
 | Param | Type | Description |
 | --- | --- | --- |
 | objects | <code>Object(s)</code> \| <code>Array</code> | either a single or multiple CSG/CAG objects to create a chain hull around |
 
-**Example**  
+**Example**
 ```js
 let hulled = chain_hull(rect(), circle())
 ```
@@ -1210,8 +1204,8 @@ let hulled = chain_hull(rect(), circle())
 ## square([options]) ⇒ [<code>CAG</code>](#CAG)
 Construct a square/rectangle
 
-**Kind**: global function  
-**Returns**: [<code>CAG</code>](#CAG) - new square  
+**Kind**: global function
+**Returns**: [<code>CAG</code>](#CAG) - new square
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -1219,7 +1213,7 @@ Construct a square/rectangle
 | [options.size] | <code>Float</code> | <code>1</code> | size of the square, either as array or scalar |
 | [options.center] | <code>Boolean</code> | <code>true</code> | wether to center the square/rectangle or not |
 
-**Example**  
+**Example**
 ```js
 let square1 = square({
   size: 10
@@ -1230,8 +1224,8 @@ let square1 = square({
 ## circle([options]) ⇒ [<code>CAG</code>](#CAG)
 Construct a circle
 
-**Kind**: global function  
-**Returns**: [<code>CAG</code>](#CAG) - new circle  
+**Kind**: global function
+**Returns**: [<code>CAG</code>](#CAG) - new circle
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -1240,7 +1234,7 @@ Construct a circle
 | [options.fn] | <code>Integer</code> | <code>32</code> | segments of circle (ie quality/ resolution) |
 | [options.center] | <code>Boolean</code> | <code>true</code> | wether to center the circle or not |
 
-**Example**  
+**Example**
 ```js
 let circle1 = circle({
   r: 10
@@ -1252,8 +1246,8 @@ let circle1 = circle({
 Construct a polygon either from arrays of paths and points,
 or just arrays of points nested paths (multiple paths) and flat paths are supported
 
-**Kind**: global function  
-**Returns**: [<code>CAG</code>](#CAG) - new polygon  
+**Kind**: global function
+**Returns**: [<code>CAG</code>](#CAG) - new polygon
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1261,7 +1255,7 @@ or just arrays of points nested paths (multiple paths) and flat paths are suppor
 | [options.points] | <code>Array</code> | points of the polygon : either flat or nested array of points |
 | [options.paths] | <code>Array</code> | paths of the polygon : either flat or nested array of points index |
 
-**Example**  
+**Example**
 ```js
 let roof = [[10,11], [0,11], [5,20]]
 let wall = [[0,0], [10,0], [10,10], [0,10]]
@@ -1285,9 +1279,9 @@ let poly = polygon({ points: roof.concat(wall), paths: [[0, 1, 2], [3, 4, 5], [3
 ## triangle() ⇒ [<code>CAG</code>](#CAG)
 Construct a triangle
 
-**Kind**: global function  
-**Returns**: [<code>CAG</code>](#CAG) - new triangle  
-**Example**  
+**Kind**: global function
+**Returns**: [<code>CAG</code>](#CAG) - new triangle
+**Example**
 ```js
 let triangle = trangle({
   length: 10
@@ -1298,8 +1292,8 @@ let triangle = trangle({
 ## circle([options]) ⇒ [<code>CAG</code>](#CAG)
 Construct a circle.
 
-**Kind**: global function  
-**Returns**: [<code>CAG</code>](#CAG) - new CAG object  
+**Kind**: global function
+**Returns**: [<code>CAG</code>](#CAG) - new CAG object
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -1313,8 +1307,8 @@ Construct a circle.
 ## ellipse([options]) ⇒ [<code>CAG</code>](#CAG)
 Construct an ellispe.
 
-**Kind**: global function  
-**Returns**: [<code>CAG</code>](#CAG) - new CAG object  
+**Kind**: global function
+**Returns**: [<code>CAG</code>](#CAG) - new CAG object
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -1328,8 +1322,8 @@ Construct an ellispe.
 ## rectangle([options]) ⇒ [<code>CAG</code>](#CAG)
 Construct a rectangle.
 
-**Kind**: global function  
-**Returns**: [<code>CAG</code>](#CAG) - new CAG object  
+**Kind**: global function
+**Returns**: [<code>CAG</code>](#CAG) - new CAG object
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -1344,8 +1338,8 @@ Construct a rectangle.
 ## roundedRectangle([options]) ⇒ [<code>CAG</code>](#CAG)
 Construct a rounded rectangle.
 
-**Kind**: global function  
-**Returns**: [<code>CAG</code>](#CAG) - new CAG object  
+**Kind**: global function
+**Returns**: [<code>CAG</code>](#CAG) - new CAG object
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -1357,7 +1351,7 @@ Construct a rounded rectangle.
 | [options.roundradius] | <code>Number</code> | <code>0.2</code> | round radius of corners |
 | [options.resolution] | <code>Number</code> | <code>defaultResolution2D</code> | number of sides per 360 rotation |
 
-**Example**  
+**Example**
 ```js
 let r = roundedRectangle({
   center: [0, 0],
@@ -1366,108 +1360,13 @@ let r = roundedRectangle({
   resolution: 36,
 });
 ```
-<a name="cube"></a>
-
-## cube([options]) ⇒ [<code>CSG</code>](#CSG)
-Construct a cuboid
-
-**Kind**: global function  
-**Returns**: [<code>CSG</code>](#CSG) - new sphere  
-
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| [options] | <code>Object</code> |  | options for construction |
-| [options.size] | <code>Float</code> | <code>1</code> | size of the side of the cuboid : can be either: - a scalar : ie a single float, in which case all dimensions will be the same - or an array: to specify different dimensions along x/y/z |
-| [options.fn] | <code>Integer</code> | <code>32</code> | segments of the sphere (ie quality/resolution) |
-| [options.fno] | <code>Integer</code> | <code>32</code> | segments of extrusion (ie quality) |
-| [options.type] | <code>String</code> | <code>&#x27;normal&#x27;</code> | type of sphere : either 'normal' or 'geodesic' |
-
-**Example**  
-```js
-let cube1 = cube({
-  r: 10,
-  fn: 20
-})
-```
-<a name="sphere"></a>
-
-## sphere([options]) ⇒ [<code>CSG</code>](#CSG)
-Construct a sphere
-
-**Kind**: global function  
-**Returns**: [<code>CSG</code>](#CSG) - new sphere  
-
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| [options] | <code>Object</code> |  | options for construction |
-| [options.r] | <code>Float</code> | <code>1</code> | radius of the sphere |
-| [options.fn] | <code>Integer</code> | <code>32</code> | segments of the sphere (ie quality/resolution) |
-| [options.fno] | <code>Integer</code> | <code>32</code> | segments of extrusion (ie quality) |
-| [options.type] | <code>String</code> | <code>&#x27;normal&#x27;</code> | type of sphere : either 'normal' or 'geodesic' |
-
-**Example**  
-```js
-let sphere1 = sphere({
-  r: 10,
-  fn: 20
-})
-```
-<a name="cylinder"></a>
-
-## cylinder([options]) ⇒ [<code>CSG</code>](#CSG)
-Construct a cylinder
-
-**Kind**: global function  
-**Returns**: [<code>CSG</code>](#CSG) - new cylinder  
-
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| [options] | <code>Object</code> |  | options for construction |
-| [options.r] | <code>Float</code> | <code>1</code> | radius of the cylinder |
-| [options.r1] | <code>Float</code> | <code>1</code> | radius of the top of the cylinder |
-| [options.r2] | <code>Float</code> | <code>1</code> | radius of the bottom of the cylinder |
-| [options.d] | <code>Float</code> | <code>1</code> | diameter of the cylinder |
-| [options.d1] | <code>Float</code> | <code>1</code> | diameter of the top of the cylinder |
-| [options.d2] | <code>Float</code> | <code>1</code> | diameter of the bottom of the cylinder |
-| [options.fn] | <code>Integer</code> | <code>32</code> | number of sides of the cylinder (ie quality/resolution) |
-
-**Example**  
-```js
-let cylinder = cylinder({
-  d: 10,
-  fn: 20
-})
-```
-<a name="torus"></a>
-
-## torus([options]) ⇒ [<code>CSG</code>](#CSG)
-Construct a torus
-
-**Kind**: global function  
-**Returns**: [<code>CSG</code>](#CSG) - new torus  
-
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| [options] | <code>Object</code> |  | options for construction |
-| [options.ri] | <code>Float</code> | <code>1</code> | radius of base circle |
-| [options.ro] | <code>Float</code> | <code>4</code> | radius offset |
-| [options.fni] | <code>Integer</code> | <code>16</code> | segments of base circle (ie quality) |
-| [options.fno] | <code>Integer</code> | <code>32</code> | segments of extrusion (ie quality) |
-| [options.roti] | <code>Integer</code> | <code>0</code> | rotation angle of base circle |
-
-**Example**  
-```js
-let torus1 = torus({
-  ri: 10
-})
-```
 <a name="polyhedron"></a>
 
 ## polyhedron([options]) ⇒ [<code>CSG</code>](#CSG)
 Construct a polyhedron from the given triangles/ polygons/points
 
-**Kind**: global function  
-**Returns**: [<code>CSG</code>](#CSG) - new polyhedron  
+**Kind**: global function
+**Returns**: [<code>CSG</code>](#CSG) - new polyhedron
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1477,7 +1376,7 @@ Construct a polyhedron from the given triangles/ polygons/points
 | [options.points] | <code>Array</code> | points to build the polyhedron from |
 | [options.colors] | <code>Array</code> | colors to apply to the polyhedron |
 
-**Example**  
+**Example**
 ```js
 let torus1 = polyhedron({
   points: [...]
@@ -1488,8 +1387,8 @@ let torus1 = polyhedron({
 ## cube([options]) ⇒ [<code>CSG</code>](#CSG)
 Construct an axis-aligned solid cuboid.
 
-**Kind**: global function  
-**Returns**: [<code>CSG</code>](#CSG) - new 3D solid  
+**Kind**: global function
+**Returns**: [<code>CSG</code>](#CSG) - new 3D solid
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -1497,7 +1396,7 @@ Construct an axis-aligned solid cuboid.
 | [options.center] | <code>Vector3</code> | <code>[0,0,0]</code> | center of cube |
 | [options.radius] | <code>Vector3</code> | <code>[1,1,1]</code> | radius of cube, single scalar also possible |
 
-**Example**  
+**Example**
 ```js
 let cube = CSG.cube({
   center: [5, 5, 5],
@@ -1509,8 +1408,8 @@ let cube = CSG.cube({
 ## sphere([options]) ⇒ [<code>CSG</code>](#CSG)
 Construct a solid sphere
 
-**Kind**: global function  
-**Returns**: [<code>CSG</code>](#CSG) - new 3D solid  
+**Kind**: global function
+**Returns**: [<code>CSG</code>](#CSG) - new 3D solid
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -1520,7 +1419,7 @@ Construct a solid sphere
 | [options.resolution] | <code>Number</code> | <code>defaultResolution3D</code> | number of polygons per 360 degree revolution |
 | [options.axes] | <code>Array</code> |  | an array with 3 vectors for the x, y and z base vectors |
 
-**Example**  
+**Example**
 ```js
 let sphere = CSG.sphere({
   center: [0, 0, 0],
@@ -1533,8 +1432,8 @@ let sphere = CSG.sphere({
 ## cylinder([options]) ⇒ [<code>CSG</code>](#CSG)
 Construct a solid cylinder.
 
-**Kind**: global function  
-**Returns**: [<code>CSG</code>](#CSG) - new 3D solid  
+**Kind**: global function
+**Returns**: [<code>CSG</code>](#CSG) - new 3D solid
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -1544,7 +1443,7 @@ Construct a solid cylinder.
 | [options.radius] | <code>Number</code> | <code>1</code> | radius of cylinder, must be scalar |
 | [options.resolution] | <code>Number</code> | <code>defaultResolution3D</code> | number of polygons per 360 degree revolution |
 
-**Example**  
+**Example**
 ```js
 let cylinder = CSG.cylinder({
   start: [0, -10, 0],
@@ -1558,8 +1457,8 @@ let cylinder = CSG.cylinder({
 ## roundedCylinder([options]) ⇒ [<code>CSG</code>](#CSG)
 Construct a cylinder with rounded ends.
 
-**Kind**: global function  
-**Returns**: [<code>CSG</code>](#CSG) - new 3D solid  
+**Kind**: global function
+**Returns**: [<code>CSG</code>](#CSG) - new 3D solid
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -1570,7 +1469,7 @@ Construct a cylinder with rounded ends.
 | [options.normal] | <code>Vector3</code> |  | vector determining the starting angle for tesselation. Should be non-parallel to start.minus(end) |
 | [options.resolution] | <code>Number</code> | <code>defaultResolution3D</code> | number of polygons per 360 degree revolution |
 
-**Example**  
+**Example**
 ```js
 let cylinder = CSG.roundedCylinder({
   start: [0, -10, 0],
@@ -1584,8 +1483,8 @@ let cylinder = CSG.roundedCylinder({
 ## cylinderElliptic([options]) ⇒ [<code>CSG</code>](#CSG)
 Construct an elliptic cylinder.
 
-**Kind**: global function  
-**Returns**: [<code>CSG</code>](#CSG) - new 3D solid  
+**Kind**: global function
+**Returns**: [<code>CSG</code>](#CSG) - new 3D solid
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -1597,7 +1496,7 @@ Construct an elliptic cylinder.
 | [options.radiusEnd] | <code>Vector2D</code> | <code>[1,1]</code> | OPTIONAL radius of rounded end, must be two dimensional array |
 | [options.resolution] | <code>Number</code> | <code>defaultResolution2D</code> | number of polygons per 360 degree revolution |
 
-**Example**  
+**Example**
 ```js
 let cylinder = CSG.cylinderElliptic({
       start: [0, -10, 0],
@@ -1612,8 +1511,8 @@ let cylinder = CSG.cylinderElliptic({
 ## roundedCube([options]) ⇒ [<code>CSG</code>](#CSG)
 Construct an axis-aligned solid rounded cuboid.
 
-**Kind**: global function  
-**Returns**: [<code>CSG</code>](#CSG) - new 3D solid  
+**Kind**: global function
+**Returns**: [<code>CSG</code>](#CSG) - new 3D solid
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -1623,7 +1522,7 @@ Construct an axis-aligned solid rounded cuboid.
 | [options.roundradius] | <code>Number</code> | <code>0.2</code> | radius of rounded edges |
 | [options.resolution] | <code>Number</code> | <code>defaultResolution3D</code> | number of polygons per 360 degree revolution |
 
-**Example**  
+**Example**
 ```js
 let cube = CSG.roundedCube({
   center: [2, 0, 2],
@@ -1638,8 +1537,8 @@ let cube = CSG.roundedCube({
 Create a polyhedron using Openscad style arguments.
 Define face vertices clockwise looking from outside.
 
-**Kind**: global function  
-**Returns**: [<code>CSG</code>](#CSG) - new 3D solid  
+**Kind**: global function
+**Returns**: [<code>CSG</code>](#CSG) - new 3D solid
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1650,7 +1549,7 @@ Define face vertices clockwise looking from outside.
 ## solidFromSlices(options)
 Creates solid from slices (Polygon) by generating walls
 
-**Kind**: global function  
+**Kind**: global function
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1659,7 +1558,7 @@ Creates solid from slices (Polygon) by generating walls
 <a name="_addWalls"></a>
 
 ## _addWalls(walls, bottom, top)
-**Kind**: global function  
+**Kind**: global function
 
 | Param | Description |
 | --- | --- |
@@ -1673,7 +1572,7 @@ Creates solid from slices (Polygon) by generating walls
 Construct a [VectorCharObject](#VectorCharObject) from a ascii character whose code is between 31 and 127,
 if the character is not supported it is replaced by a question mark.
 
-**Kind**: global function  
+**Kind**: global function
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -1685,7 +1584,7 @@ if the character is not supported it is replaced by a question mark.
 | [options.input] | <code>String</code> | <code>&#x27;?&#x27;</code> | ascii character (ignored/overwrited if provided as seconds parameter) |
 | [char] | <code>String</code> | <code>&#x27;?&#x27;</code> | ascii character |
 
-**Example**  
+**Example**
 ```js
 let vectorCharObject = vectorChar()
 or
@@ -1701,8 +1600,8 @@ let vectorCharObject = vectorChar({ xOffset: 78, input: '!' })
 Construct an array of character segments from a ascii string whose characters code is between 31 and 127,
 if one character is not supported it is replaced by a question mark.
 
-**Kind**: global function  
-**Returns**: <code>Array</code> - characters segments [[[x, y], ...], ...]  
+**Kind**: global function
+**Returns**: <code>Array</code> - characters segments [[[x, y], ...], ...]
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -1717,7 +1616,7 @@ if one character is not supported it is replaced by a question mark.
 | [options.input] | <code>String</code> | <code>&#x27;?&#x27;</code> | ascii string (ignored/overwrited if provided as seconds parameter) |
 | [text] | <code>String</code> | <code>&#x27;?&#x27;</code> | ascii string |
 
-**Example**  
+**Example**
 ```js
 let textSegments = vectorText()
 or
@@ -1735,7 +1634,7 @@ let textSegments = vectorText({ yOffset: -80, input: 'OpenJSCAD' })
 Construct a [VectorCharObject](#VectorCharObject) from a ascii character whose code is between 31 and 127,
 if the character is not supported it is replaced by a question mark.
 
-**Kind**: global function  
+**Kind**: global function
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1743,7 +1642,7 @@ if the character is not supported it is replaced by a question mark.
 | y | <code>Float</code> | y offset |
 | char | <code>String</code> | ascii character |
 
-**Example**  
+**Example**
 ```js
 let vectorCharObject = vector_char(36, 0, 'B')
 ```
@@ -1755,8 +1654,8 @@ let vectorCharObject = vector_char(36, 0, 'B')
 Construct an array of character segments from a ascii string whose characters code is between 31 and 127,
 if one character is not supported it is replaced by a question mark.
 
-**Kind**: global function  
-**Returns**: <code>Array</code> - characters segments [[[x, y], ...], ...]  
+**Kind**: global function
+**Returns**: <code>Array</code> - characters segments [[[x, y], ...], ...]
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1764,7 +1663,7 @@ if one character is not supported it is replaced by a question mark.
 | y | <code>Float</code> | y offset |
 | text | <code>String</code> | ascii string |
 
-**Example**  
+**Example**
 ```js
 let textSegments = vector_text(0, -20, 'OpenJSCAD')
 ```
@@ -1773,8 +1672,8 @@ let textSegments = vector_text(0, -20, 'OpenJSCAD')
 ## fromSides(sides) ⇒ [<code>CAG</code>](#CAG)
 Construct a CAG from a list of `Side` instances.
 
-**Kind**: global function  
-**Returns**: [<code>CAG</code>](#CAG) - new CAG object  
+**Kind**: global function
+**Returns**: [<code>CAG</code>](#CAG) - new CAG object
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1790,8 +1689,8 @@ The polygon must not self intersect.
 Hole detection follows the even/odd rule,
 which means that the order of the paths is not important.
 
-**Kind**: global function  
-**Returns**: [<code>CAG</code>](#CAG) - new CAG object  
+**Kind**: global function
+**Returns**: [<code>CAG</code>](#CAG) - new CAG object
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1802,8 +1701,8 @@ which means that the order of the paths is not important.
 ## fromObject(obj) ⇒ [<code>CAG</code>](#CAG)
 Reconstruct a CAG from an object with identical property names.
 
-**Kind**: global function  
-**Returns**: [<code>CAG</code>](#CAG) - new CAG object  
+**Kind**: global function
+**Returns**: [<code>CAG</code>](#CAG) - new CAG object
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1818,8 +1717,8 @@ The points MUST rotate counter clockwise.
 The points can define a convex or a concave polygon.
 The polygon must not self intersect.
 
-**Kind**: global function  
-**Returns**: [<code>CAG</code>](#CAG) - new CAG object  
+**Kind**: global function
+**Returns**: [<code>CAG</code>](#CAG) - new CAG object
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1831,8 +1730,8 @@ The polygon must not self intersect.
 Construct a CAG from a 2d-path (a closed sequence of points).
 Like fromPoints() but does not check if the result is a valid polygon.
 
-**Kind**: global function  
-**Returns**: [<code>CAG</code>](#CAG) - new CAG object  
+**Kind**: global function
+**Returns**: [<code>CAG</code>](#CAG) - new CAG object
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1843,8 +1742,8 @@ Like fromPoints() but does not check if the result is a valid polygon.
 ## fromCompactBinary(bin) ⇒ [<code>CAG</code>](#CAG)
 Reconstruct a CAG from the output of toCompactBinary().
 
-**Kind**: global function  
-**Returns**: [<code>CAG</code>](#CAG) - new CAG object  
+**Kind**: global function
+**Returns**: [<code>CAG</code>](#CAG) - new CAG object
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1855,8 +1754,8 @@ Reconstruct a CAG from the output of toCompactBinary().
 ## fromPolygons(polygons) ⇒ [<code>CSG</code>](#CSG)
 Construct a CSG solid from a list of `Polygon` instances.
 
-**Kind**: global function  
-**Returns**: [<code>CSG</code>](#CSG) - new CSG object  
+**Kind**: global function
+**Returns**: [<code>CSG</code>](#CSG) - new CSG object
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1868,8 +1767,8 @@ Construct a CSG solid from a list of `Polygon` instances.
 Construct a CSG solid from a list of pre-generated slices.
 See Polygon.prototype.solidFromSlices() for details.
 
-**Kind**: global function  
-**Returns**: [<code>CSG</code>](#CSG) - new CSG object  
+**Kind**: global function
+**Returns**: [<code>CSG</code>](#CSG) - new CSG object
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1880,8 +1779,8 @@ See Polygon.prototype.solidFromSlices() for details.
 ## fromObject(obj) ⇒ [<code>CSG</code>](#CSG)
 Reconstruct a CSG solid from an object with identical property names.
 
-**Kind**: global function  
-**Returns**: [<code>CSG</code>](#CSG) - new CSG object  
+**Kind**: global function
+**Returns**: [<code>CSG</code>](#CSG) - new CSG object
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1892,8 +1791,8 @@ Reconstruct a CSG solid from an object with identical property names.
 ## fromCompactBinary(bin) ⇒ [<code>CSG</code>](#CSG)
 Reconstruct a CSG from the output of toCompactBinary().
 
-**Kind**: global function  
-**Returns**: [<code>CSG</code>](#CSG) - new CSG object  
+**Kind**: global function
+**Returns**: [<code>CSG</code>](#CSG) - new CSG object
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1904,7 +1803,7 @@ Reconstruct a CSG from the output of toCompactBinary().
 ## VectorCharObject : <code>Object</code>
 Represents a character as segments
 
-**Kind**: global typedef  
+**Kind**: global typedef
 **Properties**
 
 | Name | Type | Description |

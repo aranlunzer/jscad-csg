@@ -201,9 +201,7 @@ CSG.hsv2rgb = hsv2rgb
 CSG.html2rgb = html2rgb
 CSG.rgb2html = rgb2html
 
-const { vector_char, vector_text, vectorChar, vectorText } = require('./src/api/text')
-CSG.vector_char = vector_char
-CSG.vector_text = vector_text
+const { vectorChar, vectorText } = require('./src/api/text')
 CSG.vectorChar = vectorChar
 CSG.vectorText = vectorText
 
