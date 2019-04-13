@@ -1,3 +1,4 @@
+/* eslint-disable semi */
 const {isCAG} = require('../core/utils')
 // boolean operations
 

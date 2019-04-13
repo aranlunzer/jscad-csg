@@ -167,6 +167,153 @@ const sphere = function (options) {
   return result
 }
 
+/** Construct a geodesic unit sphere (code from Brian Upton)
+ * @param {Number} iterations=2 - number of subdivision iterations
+ * @returns {CSG} new 3D solid
+ *
+ * @example
+ * let sphere = CSG.unitSphere(3);
+ */
+function unitSphere(iterations = 2) {
+  // 0:   20 triangles
+  // 1:   80 triangles
+  // 2:   320 triangles
+  // 3:   1280 triangles
+  // 4:   5120 triangles
+  // 5:   20480 triangles
+  // 6:   81920 triangles
+
+  iterations = Math.min(iterations, 6);
+
+  const t = (1 + Math.sqrt(5)) * 0.5;     // golden ratio
+  const scale = Math.sqrt(t * t + 1);
+  const a = 1 / scale;
+  const b = t * a;
+
+  const v0 = new Vector3([-a, b, 0]);
+  const v1 = new Vector3([a, b, 0]);
+  const v2 = new Vector3([-a, -b, 0]);
+  const v3 = new Vector3([a, -b, 0]);
+
+  const v4 = new Vector3([0, -a, b]);
+  const v5 = new Vector3([0, a, b]);
+  const v6 = new Vector3([0, -a, -b]);
+  const v7 = new Vector3([0, a, -b]);
+
+  const v8 = new Vector3([b, 0, -a]);
+  const v9 = new Vector3([b, 0, a]);
+  const v10 = new Vector3([-b, 0, -a]);
+  const v11 = new Vector3([-b, 0, a]);
+
+  let tris = [];
+
+  // Top cap
+
+  tris[0] = [v0, v11, v5];
+  tris[1] = [v0, v5, v1];
+  tris[2] = [v0, v1, v7];
+  tris[3] = [v0, v7, v10];
+  tris[4] = [v0, v10, v11];
+
+  // Middle band
+
+  tris[5] = [v1, v5, v9];
+  tris[6] = [v5, v11, v4];
+  tris[7] = [v11, v10, v2];
+  tris[8] = [v10, v7, v6];
+  tris[9] = [v7, v1, v8];
+
+  tris[10] = [v4, v9, v5];
+  tris[11] = [v2, v4, v11];
+  tris[12] = [v6, v2, v10];
+  tris[13] = [v8, v6, v7];
+  tris[14] = [v9, v8, v1];
+
+  // Bottom cap
+
+  tris[15] = [v3, v9, v4];
+  tris[16] = [v3, v4, v2];
+  tris[17] = [v3, v2, v6];
+  tris[18] = [v3, v6, v8];
+  tris[19] = [v3, v8, v9];
+
+  for (let i = 0; i < iterations; i++) {
+    const sub = [];
+    tris.forEach(tri => {
+      const d = tri[0];
+      const e = tri[1];
+      const f = tri[2];
+      let de = d.plus(e).unit();
+      let df = d.plus(f).unit();
+      let ef = e.plus(f).unit();
+      sub.push([d, de, df]);
+      sub.push([e, ef, de]);
+      sub.push([f, df, ef]);
+      sub.push([de, ef, df]);
+    });
+    tris = sub;
+  }
+  console.log(tris.length);
+
+  const polygons = tris.map(vecs => new Polygon3(vecs.map(vec => {
+    return new Vertex3(vec, vec);
+  })));
+  return fromPolygons(polygons);
+}
+
+/** Construct a trapezoidal prism, with a rectangular base centered at [0, 0, 0] and width on x,
+ * depth on y, height in z.  Code from Aran Lunzer.
+ *
+ * @param {Object} [options] - options for construction
+ * @param {Number} [options.height=1] - height of prism
+ * @param {Number} [options.width1=1] - width (in x direction) at base
+ * @param {Number} [options.depth1=1] - depth (in y direction) at base
+ * @param {Number} [options.width2=width1] - width at top
+ * @param {Number} [options.depth2=depth1] - depth at top
+ * @returns {CSG} new 3D solid
+ *
+ * Example usage:
+ *
+ *     let trap = CSG.trapezoidPrism({
+ *       height: 5,
+ *       width1: 3,
+ *       width2: 0,
+ *       depth1: 4
+ *     });
+ */
+function trapezoidPrism(options = {}) {
+  const height = options.height || 1;
+  const width1 = options.width1 || 1;
+  const depth1 = options.depth1 || 1;
+  const width2 = options.width2 || width1;
+  const depth2 = options.depth2 || depth1;
+  const w1h = width1 / 2, w2h = width2 / 2, d1h = depth1 / 2, d2h = depth2 / 2, h = height;
+  const vertices = [
+    [w1h, -d1h, 0],
+    [w1h, d1h, 0],
+    [-w1h, d1h, 0],
+    [-w1h, -d1h, 0],
+    [w2h, -d2h, h],
+    [w2h, d2h, h],
+    [-w2h, d2h, h],
+    [-w2h, -d2h, h]
+  ];
+  const polygons = [
+    [0, 3, 2, 1],
+    [0, 1, 5, 4],
+    [1, 2, 6, 5],
+    [2, 3, 7, 6],
+    [3, 0, 4, 7],
+    [4, 5, 6, 7]
+  ].map(seq => {
+    const faceVects = seq.map(index => new Vector3(...vertices[index]));
+    const normal = faceVects[1].minus(faceVects[0]).cross(faceVects[2].minus(faceVects[0])).unit();
+    return new Polygon3(faceVects.map(vec => new Vertex3(vec, normal)));
+  });
+  const shape = fromPolygons(polygons);
+  return shape;
+}
+
 /** Construct a solid cylinder.
  * @param {Object} [options] - options for construction
  * @param {Vector} [options.start=[0,-1,0]] - start point of cylinder
@@ -564,6 +711,8 @@ const polyhedron = function (options) {
 module.exports = {
   cube,
   sphere,
+  unitSphere,
+  trapezoidPrism,
   roundedCube,
   cylinder,
   roundedCylinder,

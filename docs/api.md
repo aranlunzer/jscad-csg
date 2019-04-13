@@ -185,6 +185,12 @@ essentially hull A+B, B+C, C+D and then union those</p>
 <dt><a href="#sphere">sphere([options])</a> ⇒ <code><a href="#CSG">CSG</a></code></dt>
 <dd><p>Construct a sphere</p>
 </dd>
+<dt><a href="#unitSphere">unitSphere([iterations])</a> ⇒ <code><a href="#CSG">CSG</a></code></dt>
+<dd><p>Construct a unit geodesic sphere (code from Brian Upton)</p>
+</dd>
+<dt><a href="#trapezoidPrism">trapezoidPrism([options])</a> ⇒ <code><a href="#CSG">CSG</a></code></dt>
+<dd><p>Construct a trapezoidal prism (code from Aran Lunzer)</p>
+</dd>
 <dt><a href="#cylinder">cylinder([options])</a> ⇒ <code><a href="#CSG">CSG</a></code></dt>
 <dd><p>Construct a cylinder</p>
 </dd>
@@ -193,12 +199,6 @@ essentially hull A+B, B+C, C+D and then union those</p>
 </dd>
 <dt><a href="#cube">cube([options])</a> ⇒ <code><a href="#CSG">CSG</a></code></dt>
 <dd><p>Construct an axis-aligned solid cuboid.</p>
-</dd>
-<dt><a href="#sphere">sphere([options])</a> ⇒ <code><a href="#CSG">CSG</a></code></dt>
-<dd><p>Construct a solid sphere</p>
-</dd>
-<dt><a href="#cylinder">cylinder([options])</a> ⇒ <code><a href="#CSG">CSG</a></code></dt>
-<dd><p>Construct a solid cylinder.</p>
 </dd>
 <dt><a href="#roundedCylinder">roundedCylinder([options])</a> ⇒ <code><a href="#CSG">CSG</a></code></dt>
 <dd><p>Construct a cylinder with rounded ends.</p>
@@ -1320,6 +1320,48 @@ let sphere = CSG.sphere({
   center: [0, 0, 0],
   radius: 2,
   resolution: 32,
+});
+```
+<a name="unitSphere"></a>
+
+## unitSphere([options]) ⇒ [<code>CSG</code>](#CSG)
+Construct a unit geodesic sphere
+
+**Kind**: global function
+**Returns**: [<code>CSG</code>](#CSG) - new 3D solid
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| [iterations] | <code>Number</code> | 2 | number of subdivision operations |
+
+**Example**
+```js
+let sphere = CSG.unitSphere(3);
+```
+<a name="trapezoidPrism"></a>
+
+## trapezoidPrism([options]) ⇒ [<code>CSG</code>](#CSG)
+Construct a trapezoidal prism, with a rectangular base centered at [0, 0, 0] and width on x, depth on y, height in z.
+
+**Kind**: global function
+**Returns**: [<code>CSG</code>](#CSG) - new 3D solid
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| [options] | <code>Object</code> |  | options for construction |
+| [options.height] | <code>Number</code> | <code>1</code> | height |
+| [options.width1] | <code>Number</code> | <code>1</code> | width (on x) at base |
+| [options.depth1] | <code>Number</code> | <code>1</code> | depth (on y) at base |
+| [options.width2] | <code>Number</code> | <code>options.width1</code> | width at top |
+| [options.depth2] | <code>Number</code> | <code>options.depth1</code> | depth at top |
+
+**Example**
+```js
+let trap = CSG.trapezoidPrism({
+  height: 5,
+  width1: 3,
+  width2: 0,
+  depth1: 4
 });
 ```
 <a name="cylinder"></a>

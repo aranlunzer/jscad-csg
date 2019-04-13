@@ -138,9 +138,11 @@ CSG.ConnectorList = require('./src/core/connectors').ConnectorList
 CSG.Properties = require('./src/core/Properties')
 
 const { square, circle, ellipse, rectangle, roundedRectangle} = require('./src/api/primitives2d')
-const {sphere, cube, roundedCube, cylinder, roundedCylinder, cylinderElliptic, polyhedron} = require('./src/api/primitives3d')
+const {sphere, unitSphere, trapezoidPrism, cube, roundedCube, cylinder, roundedCylinder, cylinderElliptic, polyhedron} = require('./src/api/primitives3d')
 
 CSG.sphere = sphere
+CSG.unitSphere = unitSphere
+CSG.trapezoidPrism = trapezoidPrism
 CSG.cube = cube
 CSG.roundedCube = roundedCube
 CSG.cylinder = cylinder
