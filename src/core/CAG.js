@@ -1,3 +1,4 @@
+/* eslint-disable semi,object-shorthand */
 const {Connector} = require('./connectors')
 const Vertex3D = require('./math/Vertex3')
 const Vector2D = require('./math/Vector2')

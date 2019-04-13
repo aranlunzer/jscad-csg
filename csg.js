@@ -137,7 +137,7 @@ CSG.Connector = require('./src/core/connectors').Connector
 CSG.ConnectorList = require('./src/core/connectors').ConnectorList
 CSG.Properties = require('./src/core/Properties')
 
-const {circle, ellipse, rectangle, roundedRectangle} = require('./src/api/primitives2d')
+const { square, circle, ellipse, rectangle, roundedRectangle} = require('./src/api/primitives2d')
 const {sphere, cube, roundedCube, cylinder, roundedCylinder, cylinderElliptic, polyhedron} = require('./src/api/primitives3d')
 
 CSG.sphere = sphere
@@ -148,6 +148,7 @@ CSG.roundedCylinder = roundedCylinder
 CSG.cylinderElliptic = cylinderElliptic
 CSG.polyhedron = polyhedron
 
+CAG.square = square
 CAG.circle = circle
 CAG.ellipse = ellipse
 CAG.rectangle = rectangle
@@ -178,6 +179,10 @@ CSG.union = union
 CSG.difference = difference
 CSG.intersection = intersection
 
+const { sectionCut, cutByPlane } = require('./src/api/ops-cuts')
+CSG.sectionCut = sectionCut
+CSG.cutByPlane = cutByPlane
+
 const { translate, center, scale, rotate, transform, mirror, expand, contract, minkowski, hull, chain_hull } = require('./src/api/ops-transformations')
 CSG.translate = translate
 CSG.center = center
@@ -205,13 +210,12 @@ const { vectorChar, vectorText } = require('./src/api/text')
 CSG.vectorChar = vectorChar
 CSG.vectorText = vectorText
 
-const { extrudeInOrthonormalBasis, extrudeInPlane, extrude, linear_extrude, rotate_extrude, rotateExtrude, rectangular_extrude } = require('./src/api/ops-extrusions')
+const { extrudeInOrthonormalBasis, extrudeInPlane, extrude, linear_extrude, rotate_extrude, rectangular_extrude } = require('./src/api/ops-extrusions')
 CSG.extrudeInOrthonormalBasis = extrudeInOrthonormalBasis
 CSG.extrudeInPlane = extrudeInPlane
 CSG.extrude = extrude
 CSG.linear_extrude = linear_extrude
 CSG.rotate_extrude = rotate_extrude
-CSG.rotateExtrude = rotateExtrude
 CSG.rectangular_extrude = rectangular_extrude
 
 /// ////////////////////////////////////

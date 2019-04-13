@@ -1,4 +1,4 @@
-<i>April 2019: updated by ael to suit needs of w3</i>
+<i>April 2019: updated by ael to suit the needs of w3</i>
 
 ## Classes
 
@@ -32,14 +32,11 @@
 
 ## Functions
 
-<i>all now accessible as </i><code>CSG.\<functionName\>()</code>
+<i>all now accessible as </i><code>CSG.\<functionName\>()</code><i> unless otherwise indicated</i>
 
 <dl>
 <dt><a href="#center">center([options], objects)</a> ⇒ <code>Object</code> | <code>Array</code></dt>
 <dd><p>Centers the given object(s) using the given options (if any)</p>
-</dd>
-<dt><a href="#clone">clone(obj)</a> ⇒ <code><a href="#CSG">CSG</a></code></dt>
-<dd><p>clone the given object</p>
 </dd>
 <dt><a href="#css2rgb">css2rgb(String)</a> ⇒</dt>
 <dd><p>Converts a CSS color name to RGB color.</p>
@@ -97,26 +94,11 @@ Conversion forumla:</p>
 <dt><a href="#intersection">intersection(objects)</a> ⇒ <code><a href="#CSG">CSG</a></code></dt>
 <dd><p>intersection of the given shapes - i.e., keep only the common parts between the given shapes</p>
 </dd>
-<dt><a href="#overCutInsideCorners">overCutInsideCorners(_cag, cutterradius)</a> ⇒ <code><a href="#CAG">CAG</a></code></dt>
-<dd><p>Using a CNC router it&#39;s impossible to cut out a true sharp inside corner. The inside corner
-will be rounded due to the radius of the cutter. This function compensates for this by creating
-an extra cutout at each inner corner so that the actual cut out shape will be at least as large
-as needed.</p>
-</dd>
 <dt><a href="#sectionCut">sectionCut(csg, orthobasis)</a></dt>
 <dd><p>cuts a csg along an orthobasis</p>
 </dd>
-<dt><a href="#cutByPlane">cutByPlane(plane)</a> ⇒ <code><a href="#CSG">CSG</a></code></dt>
+<dt><a href="#cutByPlane">cutByPlane(csg, plane)</a> ⇒ <code><a href="#CSG">CSG</a></code></dt>
 <dd><p>Cut the solid by a plane. Returns the solid on the back side of the plane.</p>
-</dd>
-<dt><a href="#expandedShellOfCCSG">expandedShellOfCCSG(radius, resolution, unionWithThis)</a></dt>
-<dd><p>Create the expanded shell of the solid:
-All faces are extruded to get a thickness of 2*radius.
-Cylinders are constructed around every side.
-Spheres are placed on every vertex.
-unionWithThis: if true, the resulting solid will be united with &#39;this&#39; solid;
-the result is a true expansion of the solid;
-if false, returns only the shell.</p>
 </dd>
 <dt><a href="#extrudeInOrthonormalBasis">extrudeInOrthonormalBasis(cag, orthonormalbasis, depth, [options])</a></dt>
 <dd><p>extrude the CAG in a certain plane.
@@ -182,29 +164,19 @@ Originally &quot;Whosa whatsis&quot; suggested &quot;Chain Hull&quot; ,
 as described at <a href="https://plus.google.com/u/0/105535247347788377245/posts/aZGXKFX1ACN">https://plus.google.com/u/0/105535247347788377245/posts/aZGXKFX1ACN</a>
 essentially hull A+B, B+C, C+D and then union those</p>
 </dd>
-<dt><a href="#square">square([options])</a> ⇒ <code><a href="#CAG">CAG</a></code></dt>
+<dt><a href="#square">CAG.square([options])</a> ⇒ <code><a href="#CAG">CAG</a></code></dt>
 <dd><p>Construct a square/rectangle</p>
 </dd>
-<dt><a href="#circle">circle([options])</a> ⇒ <code><a href="#CAG">CAG</a></code></dt>
+<dt><a href="#circle">CAG.circle([options])</a> ⇒ <code><a href="#CAG">CAG</a></code></dt>
 <dd><p>Construct a circle</p>
 </dd>
-<dt><a href="#polygon">polygon([options])</a> ⇒ <code><a href="#CAG">CAG</a></code></dt>
-<dd><p>Construct a polygon either from arrays of paths and points,
-or just arrays of points nested paths (multiple paths) and flat paths are supported</p>
-</dd>
-<dt><a href="#triangle">triangle()</a> ⇒ <code><a href="#CAG">CAG</a></code></dt>
-<dd><p>Construct a triangle</p>
-</dd>
-<dt><a href="#circle">circle([options])</a> ⇒ <code><a href="#CAG">CAG</a></code></dt>
-<dd><p>Construct a circle.</p>
-</dd>
-<dt><a href="#ellipse">ellipse([options])</a> ⇒ <code><a href="#CAG">CAG</a></code></dt>
+<dt><a href="#ellipse">CAG.ellipse([options])</a> ⇒ <code><a href="#CAG">CAG</a></code></dt>
 <dd><p>Construct an ellispe.</p>
 </dd>
-<dt><a href="#rectangle">rectangle([options])</a> ⇒ <code><a href="#CAG">CAG</a></code></dt>
+<dt><a href="#rectangle">CAG.rectangle([options])</a> ⇒ <code><a href="#CAG">CAG</a></code></dt>
 <dd><p>Construct a rectangle.</p>
 </dd>
-<dt><a href="#roundedRectangle">roundedRectangle([options])</a> ⇒ <code><a href="#CAG">CAG</a></code></dt>
+<dt><a href="#roundedRectangle">CAG.roundedRectangle([options])</a> ⇒ <code><a href="#CAG">CAG</a></code></dt>
 <dd><p>Construct a rounded rectangle.</p>
 </dd>
 <dt><a href="#cube">cube([options])</a> ⇒ <code><a href="#CSG">CSG</a></code></dt>
@@ -215,9 +187,6 @@ or just arrays of points nested paths (multiple paths) and flat paths are suppor
 </dd>
 <dt><a href="#cylinder">cylinder([options])</a> ⇒ <code><a href="#CSG">CSG</a></code></dt>
 <dd><p>Construct a cylinder</p>
-</dd>
-<dt><a href="#torus">torus([options])</a> ⇒ <code><a href="#CSG">CSG</a></code></dt>
-<dd><p>Construct a torus</p>
 </dd>
 <dt><a href="#polyhedron">polyhedron([options])</a> ⇒ <code><a href="#CSG">CSG</a></code></dt>
 <dd><p>Construct a polyhedron from the given triangles/ polygons/points</p>
@@ -240,15 +209,9 @@ or just arrays of points nested paths (multiple paths) and flat paths are suppor
 <dt><a href="#roundedCube">roundedCube([options])</a> ⇒ <code><a href="#CSG">CSG</a></code></dt>
 <dd><p>Construct an axis-aligned solid rounded cuboid.</p>
 </dd>
-<dt><a href="#polyhedron">polyhedron([options])</a> ⇒ <code><a href="#CSG">CSG</a></code></dt>
-<dd><p>Create a polyhedron using Openscad style arguments.
-Define face vertices clockwise looking from outside.</p>
-</dd>
 <dt><a href="#solidFromSlices">solidFromSlices(options)</a></dt>
 <dd><p>Creates solid from slices (Polygon) by generating walls</p>
 </dd>
-<dt><a href="#_addWalls">_addWalls(walls, bottom, top)</a></dt>
-<dd></dd>
 <dt><a href="#vectorChar">vectorChar([options], [char])</a> ⇒ <code><a href="#VectorCharObject">VectorCharObject</a></code></dt>
 <dd><p>Construct a <a href="#VectorCharObject">VectorCharObject</a> from a ascii character whose code is between 31 and 127,
 if the character is not supported it is replaced by a question mark.</p>
@@ -257,10 +220,10 @@ if the character is not supported it is replaced by a question mark.</p>
 <dd><p>Construct an array of character segments from a ascii string whose characters code is between 31 and 127,
 if one character is not supported it is replaced by a question mark.</p>
 </dd>
-<dt><a href="#fromSides">fromSides(sides)</a> ⇒ <code><a href="#CAG">CAG</a></code></dt>
+<dt><a href="#fromSides">CAG.fromSides(sides)</a> ⇒ <code><a href="#CAG">CAG</a></code></dt>
 <dd><p>Construct a CAG from a list of <code>Side</code> instances.</p>
 </dd>
-<dt><a href="#fromPoints">fromPoints(points)</a> ⇒ <code><a href="#CAG">CAG</a></code></dt>
+<dt><a href="#fromPoints">CAG.fromPoints(points)</a> ⇒ <code><a href="#CAG">CAG</a></code></dt>
 <dd><p>Construct a CAG from a list of points (a polygon) or an nested array of points.
 The rotation direction of the points is not relevant.
 The points can define a convex or a concave polygon.
@@ -268,21 +231,21 @@ The polygon must not self intersect.
 Hole detection follows the even/odd rule,
 which means that the order of the paths is not important.</p>
 </dd>
-<dt><a href="#fromObject">fromObject(obj)</a> ⇒ <code><a href="#CAG">CAG</a></code></dt>
+<dt><a href="#fromObject">CAG.fromObject(obj)</a> ⇒ <code><a href="#CAG">CAG</a></code></dt>
 <dd><p>Reconstruct a CAG from an object with identical property names.</p>
 </dd>
-<dt><a href="#fromPointsNoCheck">fromPointsNoCheck(points)</a> ⇒ <code><a href="#CAG">CAG</a></code></dt>
+<dt><a href="#fromPointsNoCheck">CAG.fromPointsNoCheck(points)</a> ⇒ <code><a href="#CAG">CAG</a></code></dt>
 <dd><p>Construct a CAG from a list of points (a polygon).
 Like fromPoints() but does not check if the result is a valid polygon.
 The points MUST rotate counter clockwise.
 The points can define a convex or a concave polygon.
 The polygon must not self intersect.</p>
 </dd>
-<dt><a href="#fromPath2">fromPath2(Path2)</a> ⇒ <code><a href="#CAG">CAG</a></code></dt>
+<dt><a href="#fromPath2">CAG.fromPath2(Path2)</a> ⇒ <code><a href="#CAG">CAG</a></code></dt>
 <dd><p>Construct a CAG from a 2d-path (a closed sequence of points).
 Like fromPoints() but does not check if the result is a valid polygon.</p>
 </dd>
-<dt><a href="#fromCompactBinary">fromCompactBinary(bin)</a> ⇒ <code><a href="#CAG">CAG</a></code></dt>
+<dt><a href="#fromCompactBinary">CAG.fromCompactBinary(bin)</a> ⇒ <code><a href="#CAG">CAG</a></code></dt>
 <dd><p>Reconstruct a CAG from the output of toCompactBinary().</p>
 </dd>
 <dt><a href="#fromPolygons">fromPolygons(polygons)</a> ⇒ <code><a href="#CSG">CSG</a></code></dt>
@@ -1222,74 +1185,6 @@ let square1 = square({
 <a name="circle"></a>
 
 ## circle([options]) ⇒ [<code>CAG</code>](#CAG)
-Construct a circle
-
-**Kind**: global function
-**Returns**: [<code>CAG</code>](#CAG) - new circle
-
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| [options] | <code>Object</code> |  | options for construction |
-| [options.r] | <code>Float</code> | <code>1</code> | radius of the circle |
-| [options.fn] | <code>Integer</code> | <code>32</code> | segments of circle (ie quality/ resolution) |
-| [options.center] | <code>Boolean</code> | <code>true</code> | wether to center the circle or not |
-
-**Example**
-```js
-let circle1 = circle({
-  r: 10
-})
-```
-<a name="polygon"></a>
-
-## polygon([options]) ⇒ [<code>CAG</code>](#CAG)
-Construct a polygon either from arrays of paths and points,
-or just arrays of points nested paths (multiple paths) and flat paths are supported
-
-**Kind**: global function
-**Returns**: [<code>CAG</code>](#CAG) - new polygon
-
-| Param | Type | Description |
-| --- | --- | --- |
-| [options] | <code>Object</code> | options for construction or either flat or nested array of points |
-| [options.points] | <code>Array</code> | points of the polygon : either flat or nested array of points |
-| [options.paths] | <code>Array</code> | paths of the polygon : either flat or nested array of points index |
-
-**Example**
-```js
-let roof = [[10,11], [0,11], [5,20]]
-let wall = [[0,0], [10,0], [10,10], [0,10]]
-
-let poly = polygon(roof)
-or
-let poly = polygon([roof, wall])
-or
-let poly = polygon({ points: roof })
-or
-let poly = polygon({ points: [roof, wall] })
-or
-let poly = polygon({ points: roof, path: [0, 1, 2] })
-or
-let poly = polygon({ points: [roof, wall], path: [[0, 1, 2], [3, 4, 5, 6]] })
-or
-let poly = polygon({ points: roof.concat(wall), paths: [[0, 1, 2], [3, 4, 5], [3, 6, 5]] })
-```
-<a name="triangle"></a>
-
-## triangle() ⇒ [<code>CAG</code>](#CAG)
-Construct a triangle
-
-**Kind**: global function
-**Returns**: [<code>CAG</code>](#CAG) - new triangle
-**Example**
-```js
-let triangle = trangle({
-  length: 10
-})
-```
-<a name="circle"></a>
-
-## circle([options]) ⇒ [<code>CAG</code>](#CAG)
 Construct a circle.
 
 **Kind**: global function
@@ -1531,19 +1426,6 @@ let cube = CSG.roundedCube({
   resolution: 36,
 });
 ```
-<a name="polyhedron"></a>
-
-## polyhedron([options]) ⇒ [<code>CSG</code>](#CSG)
-Create a polyhedron using Openscad style arguments.
-Define face vertices clockwise looking from outside.
-
-**Kind**: global function
-**Returns**: [<code>CSG</code>](#CSG) - new 3D solid
-
-| Param | Type | Description |
-| --- | --- | --- |
-| [options] | <code>Object</code> | options for construction |
-
 <a name="solidFromSlices"></a>
 
 ## solidFromSlices(options)
@@ -1554,17 +1436,6 @@ Creates solid from slices (Polygon) by generating walls
 | Param | Type | Description |
 | --- | --- | --- |
 | options | <code>Object</code> | Solid generating options  - numslices {Number} Number of slices to be generated  - callback(t, slice) {Function} Callback function generating slices.          arguments: t = [0..1], slice = [0..numslices - 1]          return: Polygon or null to skip  - loop {Boolean} no flats, only walls, it's used to generate solids like a tor |
-
-<a name="_addWalls"></a>
-
-## _addWalls(walls, bottom, top)
-**Kind**: global function
-
-| Param | Description |
-| --- | --- |
-| walls | Array of wall polygons |
-| bottom | Bottom polygon |
-| top | Top polygon |
 
 <a name="vectorChar"></a>
 
@@ -1625,47 +1496,6 @@ or
 let textSegments = vectorText({ yOffset: -50 }, 'OpenJSCAD')
 or
 let textSegments = vectorText({ yOffset: -80, input: 'OpenJSCAD' })
-```
-<a name="vector_char"></a>
-
-## ~~vector_char(x, y, char) ⇒ [<code>VectorCharObject</code>](#VectorCharObject)~~
-***Deprecated***
-
-Construct a [VectorCharObject](#VectorCharObject) from a ascii character whose code is between 31 and 127,
-if the character is not supported it is replaced by a question mark.
-
-**Kind**: global function
-
-| Param | Type | Description |
-| --- | --- | --- |
-| x | <code>Float</code> | x offset |
-| y | <code>Float</code> | y offset |
-| char | <code>String</code> | ascii character |
-
-**Example**
-```js
-let vectorCharObject = vector_char(36, 0, 'B')
-```
-<a name="vector_text"></a>
-
-## ~~vector_text(x, y, text) ⇒ <code>Array</code>~~
-***Deprecated***
-
-Construct an array of character segments from a ascii string whose characters code is between 31 and 127,
-if one character is not supported it is replaced by a question mark.
-
-**Kind**: global function
-**Returns**: <code>Array</code> - characters segments [[[x, y], ...], ...]
-
-| Param | Type | Description |
-| --- | --- | --- |
-| x | <code>Float</code> | x offset |
-| y | <code>Float</code> | y offset |
-| text | <code>String</code> | ascii string |
-
-**Example**
-```js
-let textSegments = vector_text(0, -20, 'OpenJSCAD')
 ```
 <a name="fromSides"></a>
 
