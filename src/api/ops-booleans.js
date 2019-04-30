@@ -61,7 +61,7 @@ function difference () {
   let a = arguments
   if (a[0].length) a = a[0]
   for (object = a[i++]; i < a.length; i++) {
-    if ( isCAG(a[i])) {
+    if (true || isCAG(a[i])) { // ael - avoid the yellow cut colouring
       object = object.subtract(a[i])
     } else {
       object = object.subtract(a[i].setColor(1, 1, 0)) // -- color the cuts
@@ -86,7 +86,7 @@ function intersection () {
   let a = arguments
   if (a[0].length) a = a[0]
   for (object = a[i++]; i < a.length; i++) {
-    if (isCAG(a[i])) {
+    if (true || isCAG(a[i])) { // ael - avoid the yellow cut colouring
       object = object.intersect(a[i])
     } else {
       object = object.intersect(a[i].setColor(1, 1, 0)) // -- color the cuts
