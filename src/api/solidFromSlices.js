@@ -239,7 +239,7 @@ const _addWalls = function (walls, bottom, top, bFlipped, cornerSmoothing, maxSm
     }
   }
 
-  if (cornerSmoothing && !window.noSmooth) { // @@ DEBUG HOOK
+  if (cornerSmoothing) {
     // ael - now go around all top and bottom vertices and average the normals of
     // those shared between walls whose angle is less acute than a threshold
     let dotThreshold = Math.cos(maxSmoothableAngle*Math.PI/180); // dot less than this is more acute.
